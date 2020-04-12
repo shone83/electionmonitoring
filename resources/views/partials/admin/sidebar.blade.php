@@ -16,7 +16,7 @@
              with font-awesome or any other icon font library -->
         <li class="nav-item">
           <router-link to="/admin" class="nav-link">
-            <i class="nav-icon fas fa-users-cog"></i>
+            <i class="nav-icon fas fa-users-cog cyan"></i>
             <p>
               Admin
             </p>
@@ -24,7 +24,7 @@
         </li> 
         <li class="nav-item has-treeview">
           <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-database"></i>
+            <i class="nav-icon fas fa-database orange"></i>
             <p>
               Podaci
               <i class="right fas fa-angle-left"></i>
@@ -32,10 +32,10 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <router-link to="/district" class="nav-link">
                 <i class="fas fa-map-signs nav-icon"></i>
                 <p>Okruzi</p>
-              </a>
+              </router-link>
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
@@ -58,12 +58,34 @@
           </ul>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-power-off"></i>
+          <router-link to="/users" class="nav-link">
+            <i class="nav-icon fas fa-users blue"></i>
             <p>
-              Izlogujte se
+              Korisnici
             </p>
+          </router-link>
+        </li> 
+        <li class="nav-item">
+          <router-link to="/tokens" class="nav-link">
+            <i class="nav-icon fas fa-code yellow"></i>
+            <p>
+              Token
+            </p>
+          </router-link>
+        </li> 
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('logout') }}"
+              onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">
+              <i class="nav-icon fas fa-power-off red"></i>
+              <p>
+                {{ __('Logout') }}
+              </p>
           </a>
+
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+              @csrf
+          </form>
         </li>
       </ul>
     </nav>
