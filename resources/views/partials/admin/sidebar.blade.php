@@ -32,7 +32,7 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <router-link to="/district" class="nav-link">
+              <router-link to="/districts" class="nav-link">
                 <i class="fas fa-map-signs nav-icon"></i>
                 <p>Okruzi</p>
               </router-link>
