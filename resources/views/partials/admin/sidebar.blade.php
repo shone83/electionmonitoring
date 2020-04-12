@@ -38,7 +38,7 @@
               </router-link>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="/towns" class="nav-link">
                 <i class="fas fa-city nav-icon"></i>
                 <p>Gradovi</p>
               </a>

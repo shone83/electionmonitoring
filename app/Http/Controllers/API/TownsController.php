@@ -4,9 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\District;
+use App\Town;
 
-class DistrictsController extends Controller
+class TownsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class DistrictsController extends Controller
      */
     public function index()
     {
-        return District::paginate(10)->toJson();
+        return Town::with('district')->paginate(20);
     }
 
     /**
@@ -26,7 +26,9 @@ class DistrictsController extends Controller
      */
     public function store(Request $request)
     {
-        return District::create([
+        return Town::create([
+            'district_id' => $request['district_id'],
+            'electoral_number' => $request['electoral_number'],
             'name' => $request['name']
         ]);
     }
@@ -51,9 +53,9 @@ class DistrictsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $district = District::findOrFail($id);
+        $town = Town::findOrFail($id);
 
-        $district->update($request->all());
+        $town->update($request->all());
     }
 
     /**
@@ -64,8 +66,8 @@ class DistrictsController extends Controller
      */
     public function destroy($id)
     {
-        $district = District::findOrFail($id);
+        $town = Town::findOrFail($id);
 
-        $district->delete();
+        $town->delete();
     }
 }

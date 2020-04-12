@@ -2198,6 +2198,220 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Towns.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Towns.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      editmode: false,
+      districts: {},
+      towns: {},
+      form: new Form({
+        id: '',
+        district_id: '',
+        electoral_number: '',
+        name: ''
+      })
+    };
+  },
+  methods: {
+    updateTown: function updateTown() {
+      var _this = this;
+
+      this.$Progress.start();
+      this.form.put('api/town/' + this.form.id).then(function () {
+        $('#addNew').modal('hide');
+        Toast.fire({
+          icon: 'success',
+          title: 'Grad/Opština uspešno izmenjen/a!'
+        });
+
+        _this.$Progress.finish();
+
+        Fire.$emit('AfterIsDone');
+      })["catch"](function () {
+        _this.$Progress.fail();
+      });
+    },
+    editModal: function editModal(town) {
+      this.editmode = true;
+      this.form.reset();
+      $('#addNew').modal('show');
+      this.form.fill(town);
+    },
+    newModal: function newModal() {
+      this.editmode = false;
+      this.form.reset();
+      $('#addNew').modal('show');
+    },
+    deleteTown: function deleteTown(id) {
+      var _this2 = this;
+
+      Swal.fire({
+        title: 'Dali ste sigurni?',
+        text: "Nećete moći da vratite podatke!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#808080',
+        confirmButtonText: 'Da, obrisati!',
+        cancelButtonText: 'Odustati'
+      }).then(function (result) {
+        if (result.value) {
+          // Send request to the server
+          _this2.form["delete"]('api/town/' + id).then(function () {
+            Toast.fire({
+              icon: 'success',
+              title: 'Grad/Opština uspešno obrisan/a!'
+            });
+            Fire.$emit('AfterIsDone');
+          })["catch"](function () {
+            Swal("Nije uspelo!", "Nešto nije u redu!", "warning");
+          });
+        }
+      });
+    },
+    loadTowns: function loadTowns() {
+      var _this3 = this;
+
+      axios.get('api/town').then(function (_ref) {
+        var data = _ref.data;
+        return _this3.towns = data;
+      });
+    },
+    loadDistricts: function loadDistricts() {
+      var _this4 = this;
+
+      axios.get('api/district').then(function (response) {
+        _this4.districts = response.data.data;
+      });
+    },
+    createTown: function createTown() {
+      var _this5 = this;
+
+      this.$Progress.start();
+      this.form.post('api/town').then(function () {
+        Fire.$emit('AfterIsDone');
+        $('#addNew').modal('hide');
+        Toast.fire({
+          icon: 'success',
+          title: 'Grad/Opština uspešno kreiran/a!'
+        });
+
+        _this5.$Progress.finish();
+      })["catch"](function () {
+        _this5.$Progress.fail();
+      });
+    }
+  },
+  created: function created() {
+    var _this6 = this;
+
+    this.loadDistricts();
+    this.loadTowns();
+    Fire.$on('AfterIsDone', function () {
+      _this6.loadTowns();
+    });
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Users.vue?vue&type=script&lang=js&":
 /*!****************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Users.vue?vue&type=script&lang=js& ***!
@@ -2307,11 +2521,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       editmode: false,
-      roles: [],
+      roles: {},
       users: {},
       form: new Form({
         id: '',
@@ -61100,7 +61316,7 @@ var render = function() {
                 },
                 [
                   _vm._v("Dodati \n                "),
-                  _c("i", { staticClass: "fa fa-user-plus fa-fw" })
+                  _c("i", { staticClass: "fa fa-map-signs fa-fw" })
                 ]
               )
             ])
@@ -61114,7 +61330,7 @@ var render = function() {
                   _vm._m(0),
                   _vm._v(" "),
                   _vm._l(_vm.districts.data, function(district) {
-                    return _c("tr", [
+                    return _c("tr", { key: district.id }, [
                       _c("td", [_vm._v(_vm._s(district.id))]),
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(district.name))]),
@@ -61439,6 +61655,415 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Towns.vue?vue&type=template&id=65326846&":
+/*!********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Towns.vue?vue&type=template&id=65326846& ***!
+  \********************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row mt-5" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "box" }, [
+          _c("div", { staticClass: "box-header" }, [
+            _c("h3", { staticClass: "box-title" }, [_vm._v("Gradovi/opštine")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "box-tools float-right" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary btn-sm",
+                  attrs: { type: "submit" },
+                  on: { click: _vm.newModal }
+                },
+                [
+                  _vm._v("Dodati \n                "),
+                  _c("i", { staticClass: "fa fa-city fa-fw" })
+                ]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "box-body table-responsive no-padding" }, [
+            _c("table", { staticClass: "table table-hover" }, [
+              _c(
+                "tbody",
+                [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _vm._l(_vm.towns.data, function(town) {
+                    return _c("tr", { key: town.id }, [
+                      _c("td", [_vm._v(_vm._s(town.id))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(town.district.name))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(town.electoral_number))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(town.name))]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c(
+                          "a",
+                          {
+                            attrs: { href: "#" },
+                            on: {
+                              click: function($event) {
+                                return _vm.editModal(town)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-edit" })]
+                        ),
+                        _vm._v("\n                  /\n                  "),
+                        _c(
+                          "a",
+                          {
+                            attrs: { href: "#" },
+                            on: {
+                              click: function($event) {
+                                return _vm.deleteTown(town.id)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-trash red" })]
+                        )
+                      ])
+                    ])
+                  })
+                ],
+                2
+              )
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "addNew",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "addNewLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c(
+                  "h5",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: !_vm.editmode,
+                        expression: "!editmode"
+                      }
+                    ],
+                    staticClass: "modal-title",
+                    attrs: { id: "addNewLabel" }
+                  },
+                  [_vm._v("Dodati grad/opštinu")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "h5",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.editmode,
+                        expression: "editmode"
+                      }
+                    ],
+                    staticClass: "modal-title",
+                    attrs: { id: "addNewLabel" }
+                  },
+                  [_vm._v("Izmeniti grad/opštinu")]
+                ),
+                _vm._v(" "),
+                _vm._m(1)
+              ]),
+              _vm._v(" "),
+              _c(
+                "form",
+                {
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      _vm.editmode ? _vm.updateTown() : _vm.createTown()
+                    }
+                  }
+                },
+                [
+                  _c("div", { staticClass: "modal-body" }, [
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.district_id,
+                                expression: "form.district_id"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            class: {
+                              "is-invalid": _vm.form.errors.has("type")
+                            },
+                            attrs: { name: "district_id" },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.form,
+                                  "district_id",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
+                            }
+                          },
+                          [
+                            _c("option", { attrs: { value: "" } }, [
+                              _vm._v("Izaberite okrug")
+                            ]),
+                            _vm._v(" "),
+                            _vm._l(_vm.districts, function(district) {
+                              return district
+                                ? _c(
+                                    "option",
+                                    {
+                                      key: district.id,
+                                      domProps: { value: district.id }
+                                    },
+                                    [_vm._v(_vm._s(district.name))]
+                                  )
+                                : _vm._e()
+                            })
+                          ],
+                          2
+                        ),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "district_id" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.electoral_number,
+                              expression: "form.electoral_number"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has(
+                              "electoral_number"
+                            )
+                          },
+                          attrs: {
+                            type: "text",
+                            name: "electoral_number",
+                            placeholder: "Broj birača"
+                          },
+                          domProps: { value: _vm.form.electoral_number },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.form,
+                                "electoral_number",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "electoral_number" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.name,
+                              expression: "form.name"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: { "is-invalid": _vm.form.errors.has("name") },
+                          attrs: {
+                            type: "text",
+                            name: "name",
+                            placeholder: "Ime grada/opštine"
+                          },
+                          domProps: { value: _vm.form.name },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "name", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "name" }
+                        })
+                      ],
+                      1
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-footer" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-secondary",
+                        attrs: { type: "button", "data-dismiss": "modal" }
+                      },
+                      [_vm._v("Zatvori")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.editmode,
+                            expression: "editmode"
+                          }
+                        ],
+                        staticClass: "btn btn-info",
+                        attrs: { type: "submit" }
+                      },
+                      [_vm._v("Izmeniti")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: !_vm.editmode,
+                            expression: "!editmode"
+                          }
+                        ],
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "submit" }
+                      },
+                      [_vm._v("Dodati")]
+                    )
+                  ])
+                ]
+              )
+            ])
+          ]
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("th", [_vm._v("ID")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Okrug")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Broj birača")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Ime grada/opštine")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Users.vue?vue&type=template&id=30c27aa6&":
 /*!********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Users.vue?vue&type=template&id=30c27aa6& ***!
@@ -61470,7 +62095,7 @@ var render = function() {
                   on: { click: _vm.newModal }
                 },
                 [
-                  _vm._v("Dodati "),
+                  _vm._v("Dodati \n              "),
                   _c("i", { staticClass: "fa fa-user-plus fa-fw" })
                 ]
               )
@@ -61485,7 +62110,7 @@ var render = function() {
                   _vm._m(0),
                   _vm._v(" "),
                   _vm._l(_vm.users.data, function(user) {
-                    return _c("tr", [
+                    return _c("tr", { key: user.id }, [
                       _c("td", [_vm._v(_vm._s(user.id))]),
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(user.name))]),
@@ -61739,7 +62364,7 @@ var render = function() {
                             _vm._l(_vm.roles, function(role) {
                               return _c(
                                 "option",
-                                { domProps: { value: role.id } },
+                                { key: role.id, domProps: { value: role.id } },
                                 [_vm._v(_vm._s(role.name))]
                               )
                             })
@@ -61748,7 +62373,7 @@ var render = function() {
                         ),
                         _vm._v(" "),
                         _c("has-error", {
-                          attrs: { form: _vm.form, field: "role" }
+                          attrs: { form: _vm.form, field: "role_id" }
                         })
                       ],
                       1
@@ -78587,6 +79212,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Towns.vue":
+/*!*******************************************!*\
+  !*** ./resources/js/components/Towns.vue ***!
+  \*******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Towns_vue_vue_type_template_id_65326846___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Towns.vue?vue&type=template&id=65326846& */ "./resources/js/components/Towns.vue?vue&type=template&id=65326846&");
+/* harmony import */ var _Towns_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Towns.vue?vue&type=script&lang=js& */ "./resources/js/components/Towns.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Towns_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Towns_vue_vue_type_template_id_65326846___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Towns_vue_vue_type_template_id_65326846___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Towns.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Towns.vue?vue&type=script&lang=js&":
+/*!********************************************************************!*\
+  !*** ./resources/js/components/Towns.vue?vue&type=script&lang=js& ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Towns_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Towns.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Towns.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Towns_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Towns.vue?vue&type=template&id=65326846&":
+/*!**************************************************************************!*\
+  !*** ./resources/js/components/Towns.vue?vue&type=template&id=65326846& ***!
+  \**************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Towns_vue_vue_type_template_id_65326846___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Towns.vue?vue&type=template&id=65326846& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Towns.vue?vue&type=template&id=65326846&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Towns_vue_vue_type_template_id_65326846___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Towns_vue_vue_type_template_id_65326846___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/Users.vue":
 /*!*******************************************!*\
   !*** ./resources/js/components/Users.vue ***!
@@ -78931,6 +79625,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Tokens_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/Tokens.vue */ "./resources/js/components/Tokens.vue");
 /* harmony import */ var _components_Roles_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/Roles.vue */ "./resources/js/components/Roles.vue");
 /* harmony import */ var _components_Districts_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/Districts.vue */ "./resources/js/components/Districts.vue");
+/* harmony import */ var _components_Towns_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/Towns.vue */ "./resources/js/components/Towns.vue");
+
 
 
 
@@ -78951,6 +79647,9 @@ __webpack_require__.r(__webpack_exports__);
 }, {
   path: '/districts',
   component: _components_Districts_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
+}, {
+  path: '/towns',
+  component: _components_Towns_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
 }]);
 
 /***/ }),

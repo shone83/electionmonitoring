@@ -8,7 +8,7 @@
 
               <div class="box-tools float-right">
                 <button type="submit" class="btn btn-primary btn-sm" @click="newModal">Dodati 
-                    <i class="fa fa-user-plus fa-fw"></i>
+                    <i class="fa fa-map-signs fa-fw"></i>
                 </button>
               </div>
             </div>
@@ -19,7 +19,7 @@
                   <th>ID</th>
                   <th>Ime</th>
                 </tr>
-                <tr v-for="district in districts.data">
+                <tr v-for="district in districts.data" v-bind:key="district.id">
                   <td>{{ district.id }}</td>
                   <td>{{ district.name }}</td>
                   <td>
