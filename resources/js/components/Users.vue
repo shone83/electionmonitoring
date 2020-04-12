@@ -152,7 +152,7 @@
 
             deleteUser(id) {
               Swal.fire({
-                title: 'Dali ste sigurni?',
+                title: 'Da li ste sigurni?',
                 text: "Nećete moći da vratite podatke!",
                 icon: 'warning',
                 showCancelButton: true,

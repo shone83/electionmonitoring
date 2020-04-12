@@ -4,9 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Town;
+use App\ElectoralUnit;
 
-class TownsController extends Controller
+class ElectoralUnitsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class TownsController extends Controller
      */
     public function index()
     {
-        return Town::with('district')->paginate(20);
+        return ElectoralUnit::with('town')->with('settlement')->paginate(20)->toJson();
     }
 
     /**
@@ -26,11 +26,12 @@ class TownsController extends Controller
      */
     public function store(Request $request)
     {
-        return Town::create([
-            'district_id' => $request['district_id'],
-            'electoral_number' => $request['electoral_number'],
+        return ElectoralUnit::create([
+            'town_id' => $request['town_id'],
+            'settlement_id' => $request['settlement_id'],
             'name' => $request['name'],
-            'councilor_number' => $request['councilor_number']
+            'expected_result' => $request['expected_result'],
+            'capillary' => $request['capillary']
         ]);
     }
 
@@ -54,9 +55,9 @@ class TownsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $town = Town::findOrFail($id);
+        $electoralUnit = ElectoralUnit::findOrFail($id);
 
-        $town->update($request->all());
+        $electoralUnit->update($request->all());
     }
 
     /**
@@ -67,8 +68,8 @@ class TownsController extends Controller
      */
     public function destroy($id)
     {
-        $town = Town::findOrFail($id);
+        $electoralUnit = ElectoralUnit::findOrFail($id);
 
-        $town->delete();
+        $electoralUnit->delete();
     }
 }

@@ -4,7 +4,7 @@
         <div class="col-md-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Gradovi/opštine</h3>
+              <h3 class="box-title">Izborne jedinice</h3>
 
               <div class="box-tools float-right">
                 <button type="submit" class="btn btn-primary btn-sm" @click="newModal">Dodati 
@@ -17,23 +17,25 @@
               <table class="table table-hover">
                 <tbody><tr>
                   <th>ID</th>
-                  <th>Ime grada/opštine</th>
-                  <th>Okrug</th>
-                  <th>Broj birača</th>
-                  <th>Broj mandata</th>
+                  <th>Izborne jedinice</th>
+                  <th>Mesni odbor</th>
+                  <th>Grad/Opština</th>
+                  <th>Očekivani rezultat</th>
+                  <th>Kapilarni glasovi</th>
                 </tr>
-                <tr v-for="town in towns.data" v-bind:key="town.id">
-                  <td>{{ town.id }}</td>
-                  <td>{{ town.name }}</td>
-                  <td>{{ town.district.name }}</td>
-                  <td>{{ town.electoral_number }}</td>
-                  <td>{{ town.councilor_number }}</td>
+                <tr v-for="electoral_unit in electoral_units.data" v-bind:key="electoral_unit.id">
+                  <td>{{ electoral_unit.id }}</td>
+                  <td>{{ electoral_unit.name }}</td>
+                  <td>{{ electoral_unit.settlement.name }}</td>
+                  <td>{{ electoral_unit.town.name }}</td>
+                  <td>{{ electoral_unit.expected_result }}</td>
+                  <td>{{ electoral_unit.capillary }}</td>
                   <td>
-                      <a href="#" @click="editModal(town)">
+                      <a href="#" @click="editModal(electoral_unit)">
                           <i class="fa fa-edit"></i>
                       </a>
                       /
-                      <a href="#" @click="deleteTown(town.id)">
+                      <a href="#" @click="deleteElectoralUnit(electoral_unit.id)">
                           <i class="fa fa-trash red"></i>
                       </a>
                   </td>
@@ -50,35 +52,42 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" v-show="!editmode" id="addNewLabel">Dodati grad/opštinu</h5>
-              <h5 class="modal-title" v-show="editmode" id="addNewLabel">Izmeniti grad/opštinu</h5>
+              <h5 class="modal-title" v-show="!editmode" id="addNewLabel">Dodati izbornu jedinicu</h5>
+              <h5 class="modal-title" v-show="editmode" id="addNewLabel">Izmeniti izbornu jedinicu</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <form @submit.prevent="editmode ? updateTown() : createTown()">
+            <form @submit.prevent="editmode ? updateElectoralUnit() : createElectoralUnit()">
             <div class="modal-body">
                 <div class="form-group">
-                    <select name="district_id" class="form-control" v-model="form.district_id" :class="{ 'is-invalid': form.errors.has('type') }">
-                        <option value="">Izaberite okrug</option>
-                        <option v-for="district in districts" v-bind:key="district.id" :value="district.id" v-if="district">{{ district.name }}</option>
+                    <input v-model="form.name" type="text" name="name" placeholder="Izborna jedinica"
+                      class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
+                    <has-error :form="form" field="name"></has-error>
+                </div>
+                <div class="form-group">
+                    <select name="settlement_id" class="form-control" v-model="form.settlement_id" :class="{ 'is-invalid': form.errors.has('type') }">
+                        <option value="">Izaberite mesni odbor</option>
+                        <option v-for="settlement in settlements" v-bind:key="settlement.id" :value="settlement.id" v-if="settlement">{{ settlement.name }}</option>
                     </select>
-                    <has-error :form="form" field="district_id"></has-error>
+                    <has-error :form="form" field="settlement_id"></has-error>
                 </div>
                 <div class="form-group">
-                  <input v-model="form.electoral_number" type="text" name="electoral_number" placeholder="Broj birača"
-                    class="form-control" :class="{ 'is-invalid': form.errors.has('electoral_number') }">
-                  <has-error :form="form" field="electoral_number"></has-error>
+                    <select name="town_id" class="form-control" v-model="form.town_id" :class="{ 'is-invalid': form.errors.has('type') }">
+                        <option value="">Izaberite grad/opštinu</option>
+                        <option v-for="town in towns" v-bind:key="town.id" :value="town.id" v-if="town">{{ town.name }}</option>
+                    </select>
+                    <has-error :form="form" field="town_id"></has-error>
                 </div>
                 <div class="form-group">
-                  <input v-model="form.councilor_number" type="text" name="councilor_number" placeholder="Broj mandata"
-                    class="form-control" :class="{ 'is-invalid': form.errors.has('councilor_number') }">
-                  <has-error :form="form" field="councilor_number"></has-error>
+                  <input v-model="form.expected_result" type="text" name="expected_result" placeholder="Očekivani rezultat"
+                    class="form-control" :class="{ 'is-invalid': form.errors.has('expected_result') }">
+                  <has-error :form="form" field="expected_result"></has-error>
                 </div>
                 <div class="form-group">
-                  <input v-model="form.name" type="text" name="name" placeholder="Ime grada/opštine"
-                    class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
-                  <has-error :form="form" field="name"></has-error>
+                  <input v-model="form.capillary" type="text" name="capillary" placeholder="Kapilarni glasovi"
+                    class="form-control" :class="{ 'is-invalid': form.errors.has('capillary') }">
+                  <has-error :form="form" field="capillary"></has-error>
                 </div>
             </div>
             <div class="modal-footer">
@@ -98,28 +107,30 @@
         data() {
             return {
               editmode: false,
-              districts: {},
               towns: {},
+              settlements: {},
+              electoral_units: {},
               form: new Form({
                 id: '',
-                district_id: '',
-                electoral_number: '',
+                town_id: '',
+                settlement_id: '',
                 name: '',
-                councilor_number: ''
+                expected_result: '',
+                capillary: ''
               })
             }
         },
 
         methods: {
 
-            updateTown() {
+            updateElectoralUnit() {
               this.$Progress.start();
-              this.form.put('api/town/'+this.form.id)
+              this.form.put('api/electoral_unit/'+this.form.id)
               .then(() => {
                 $('#addNew').modal('hide');
                 Toast.fire({
                       icon: 'success',
-                      title: 'Grad/Opština uspešno izmenjen/a!'
+                      title: 'Izborna jedinica uspešno izmenjena!'
                     })
                 this.$Progress.finish();
                 Fire.$emit('AfterIsDone');
@@ -129,11 +140,11 @@
               });
             },
 
-            editModal(town) {
+            editModal(electoral_unit) {
               this.editmode = true;
               this.form.reset();
               $('#addNew').modal('show');
-              this.form.fill(town);
+              this.form.fill(electoral_unit);
             },
 
             newModal() {
@@ -142,7 +153,7 @@
               $('#addNew').modal('show');
             },
 
-            deleteTown(id) {
+            deleteElectoralUnit(id) {
               Swal.fire({
                 title: 'Da li ste sigurni?',
                 text: "Nećete moći da vratite podatke!",
@@ -155,10 +166,10 @@
               }).then((result) => {
                 if (result.value) {
                   // Send request to the server
-                  this.form.delete('api/town/'+id).then(() => {
+                  this.form.delete('api/electoral_unit/'+id).then(() => {
                       Toast.fire({
                       icon: 'success',
-                      title: 'Grad/Opština uspešno obrisan/a!'
+                      title: 'Izborna jedinica uspešno obrisana!'
                     })
                   Fire.$emit('AfterIsDone');
                   }).catch(() => {
@@ -169,24 +180,28 @@
             },
 
             loadTowns() {
-              axios.get('api/town').then(({ data }) => (this.towns = data));
+              axios.get('api/town').then(response => { this.towns = response.data.data; });
             },
 
-            loadDistricts() {
-              axios.get('api/district').then(response => { this.districts = response.data.data; });
+            loadSettlements() {
+              axios.get('api/settlement').then(response => { this.settlements = response.data.data; });
             },
 
-            createTown() {
+            loadElectoralUnits() {
+              axios.get('api/electoral_unit').then(({ data }) => (this.electoral_units = data));
+            },
+
+            createElectoralUnit() {
               this.$Progress.start();
 
-              this.form.post('api/town')
+              this.form.post('api/electoral_unit')
               .then(() => {
                     Fire.$emit('AfterIsDone');
                     $('#addNew').modal('hide')
 
                     Toast.fire({
                       icon: 'success',
-                      title: 'Grad/Opština uspešno kreiran/a!'
+                      title: 'Izborna jedinica uspešno kreirana!'
                     })
 
                     this.$Progress.finish();
@@ -199,10 +214,11 @@
         },
 
         created() {
-            this.loadDistricts();
             this.loadTowns();
+            this.loadSettlements();
+            this.loadElectoralUnits();
             Fire.$on('AfterIsDone', () => {
-              this.loadTowns();
+              this.loadElectoralUnits();
             });
         }
     }

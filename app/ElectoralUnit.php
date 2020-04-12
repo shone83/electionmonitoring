@@ -10,7 +10,8 @@ class ElectoralUnit extends Model
         'town_id', 
         'settlement_id', 
         'name', 
-        'expected_result'
+        'expected_result',
+        'capillary'
     ];
 
     public function town()

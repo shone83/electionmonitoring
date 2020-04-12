@@ -4,11 +4,11 @@
         <div class="col-md-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Korisnici</h3>
+              <h3 class="box-title">Mesni odbori</h3>
 
               <div class="box-tools float-right">
                 <button type="submit" class="btn btn-primary btn-sm" @click="newModal">Dodati 
-                    <i class="fa fa-map-signs fa-fw"></i>
+                    <i class="fa fa-city fa-fw"></i>
                 </button>
               </div>
             </div>
@@ -17,17 +17,19 @@
               <table class="table table-hover">
                 <tbody><tr>
                   <th>ID</th>
-                  <th>Ime</th>
+                  <th>Mesni odbor</th>
+                  <th>Grad/Opština</th>
                 </tr>
-                <tr v-for="district in districts.data" v-bind:key="district.id">
-                  <td>{{ district.id }}</td>
-                  <td>{{ district.name }}</td>
+                <tr v-for="settlement in settlements.data" v-bind:key="settlement.id">
+                  <td>{{ settlement.id }}</td>
+                  <td>{{ settlement.name }}</td>
+                  <td>{{ settlement.town.name }}</td>
                   <td>
-                      <a href="#" @click="editModal(district)">
+                      <a href="#" @click="editModal(settlement)">
                           <i class="fa fa-edit"></i>
                       </a>
                       /
-                      <a href="#" @click="deleteDistrict(district.id)">
+                      <a href="#" @click="deleteSettlement(settlement.id)">
                           <i class="fa fa-trash red"></i>
                       </a>
                   </td>
@@ -44,16 +46,23 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" v-show="!editmode" id="addNewLabel">Dodati nov okrug</h5>
-              <h5 class="modal-title" v-show="editmode" id="addNewLabel">Izmeniti okrug</h5>
+              <h5 class="modal-title" v-show="!editmode" id="addNewLabel">Dodati mesni odbor</h5>
+              <h5 class="modal-title" v-show="editmode" id="addNewLabel">Izmeniti mesni odbor</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <form @submit.prevent="editmode ? updateDistrict() : createDistrict()">
+            <form @submit.prevent="editmode ? updateSettlement() : createSettlement()">
             <div class="modal-body">
                 <div class="form-group">
-                  <input v-model="form.name" type="text" name="name" placeholder="Ime okruga"
+                    <select name="town_id" class="form-control" v-model="form.town_id" :class="{ 'is-invalid': form.errors.has('type') }">
+                        <option value="">Izaberite grad/opštinu</option>
+                        <option v-for="town in towns" v-bind:key="town.id" :value="town.id" v-if="town">{{ town.name }}</option>
+                    </select>
+                    <has-error :form="form" field="town_id"></has-error>
+                </div>
+                <div class="form-group">
+                  <input v-model="form.name" type="text" name="name" placeholder="Mesni odbor"
                     class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
                   <has-error :form="form" field="name"></has-error>
                 </div>
@@ -75,9 +84,11 @@
         data() {
             return {
               editmode: false,
-              districts: {},
+              towns: {},
+              settlements: {},
               form: new Form({
                 id: '',
+                town_id: '',
                 name: ''
               })
             }
@@ -85,14 +96,14 @@
 
         methods: {
 
-            updateDistrict() {
+            updateSettlement() {
               this.$Progress.start();
-              this.form.put('api/district/'+this.form.id)
+              this.form.put('api/settlement/'+this.form.id)
               .then(() => {
                 $('#addNew').modal('hide');
                 Toast.fire({
                       icon: 'success',
-                      title: 'Okrug uspešno izmenjen!'
+                      title: 'Mesni odbor uspešno izmenjen!'
                     })
                 this.$Progress.finish();
                 Fire.$emit('AfterIsDone');
@@ -102,11 +113,11 @@
               });
             },
 
-            editModal(district) {
+            editModal(settlement) {
               this.editmode = true;
               this.form.reset();
               $('#addNew').modal('show');
-              this.form.fill(district);
+              this.form.fill(settlement);
             },
 
             newModal() {
@@ -115,7 +126,7 @@
               $('#addNew').modal('show');
             },
 
-            deleteDistrict(id) {
+            deleteSettlement(id) {
               Swal.fire({
                 title: 'Da li ste sigurni?',
                 text: "Nećete moći da vratite podatke!",
@@ -128,10 +139,10 @@
               }).then((result) => {
                 if (result.value) {
                   // Send request to the server
-                  this.form.delete('api/district/'+id).then(() => {
+                  this.form.delete('api/settlement/'+id).then(() => {
                       Toast.fire({
                       icon: 'success',
-                      title: 'Okrug uspešno obrisan!'
+                      title: 'Mesni odbor uspešno obrisan!'
                     })
                   Fire.$emit('AfterIsDone');
                   }).catch(() => {
@@ -141,21 +152,25 @@
               })
             },
 
-            loadDistricts() {
-              axios.get('api/district').then(({ data }) => (this.districts = data));
+            loadSettlements() {
+              axios.get('api/settlement').then(({ data }) => (this.settlements = data));
             },
 
-            createDistrict() {
+            loadTowns() {
+              axios.get('api/town').then(response => { this.towns = response.data.data; });
+            },
+
+            createSettlement() {
               this.$Progress.start();
 
-              this.form.post('api/district')
+              this.form.post('api/settlement')
               .then(() => {
                     Fire.$emit('AfterIsDone');
                     $('#addNew').modal('hide')
 
                     Toast.fire({
                       icon: 'success',
-                      title: 'Okrug uspešno kreiran!'
+                      title: 'Mesni odbor uspešno kreiran!'
                     })
 
                     this.$Progress.finish();
@@ -168,9 +183,10 @@
         },
 
         created() {
-            this.loadDistricts();
+            this.loadTowns();
+            this.loadSettlements();
             Fire.$on('AfterIsDone', () => {
-              this.loadDistricts();
+              this.loadSettlements();
             });
         }
     }

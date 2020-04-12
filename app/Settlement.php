@@ -8,8 +8,7 @@ class Settlement extends Model
 {
     protected $fillable = [
         'name', 
-        'town_id', 
-        'reon_id'
+        'town_id'
     ];
 
     public function town()

@@ -4,6 +4,8 @@ import Tokens from './components/Tokens.vue';
 import Roles from './components/Roles.vue';
 import Districts from './components/Districts.vue';
 import Towns from './components/Towns.vue';
+import Settlements from './components/Settlements.vue';
+import ElectoralUnits from './components/ElectoralUnits.vue';
 
 export default [
     { path: '/admin', component: Admin},
@@ -11,5 +13,7 @@ export default [
     { path: '/tokens', component: Tokens},
     { path: '/roles', component: Roles},
     { path: '/districts', component: Districts},
-    { path: '/towns', component: Towns}
+    { path: '/towns', component: Towns},
+    { path: '/settlements', component: Settlements},
+    { path: '/electoral_units', component: ElectoralUnits}
 ]

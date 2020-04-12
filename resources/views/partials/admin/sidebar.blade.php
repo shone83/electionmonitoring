@@ -44,13 +44,13 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="/settlements" class="nav-link">
                 <i class="fas fa-building nav-icon"></i>
                 <p>Mesni odbori</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="/electoral_units" class="nav-link">
                 <i class="fas fa-person-booth nav-icon"></i>
                 <p>Izborne jedinice</p>
               </a>
@@ -65,6 +65,14 @@
             </p>
           </router-link>
         </li> 
+        <li class="nav-item">
+          <router-link to="#" class="nav-link">
+            <i class="nav-icon fas fa-chart-bar pink"></i>
+            <p>
+              Statistika
+            </p>
+          </router-link>
+        </li>
         <li class="nav-item">
           <router-link to="/tokens" class="nav-link">
             <i class="nav-icon fas fa-code yellow"></i>

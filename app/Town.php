@@ -9,7 +9,8 @@ class Town extends Model
     protected $fillable = [
         'name', 
         'district_id', 
-        'electoral_number'
+        'electoral_number',
+        'councilor_number'
     ];
 
     public function district()
