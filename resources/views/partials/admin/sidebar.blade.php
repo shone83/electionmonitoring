@@ -15,10 +15,10 @@
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
         <li class="nav-item">
-          <router-link to="/admin" class="nav-link">
-            <i class="nav-icon fas fa-users-cog cyan"></i>
+          <router-link to="/dashboard" class="nav-link">
+            <i class="nav-icon fas fa-tachometer-alt cyan"></i>
             <p>
-              Admin
+              Kontrolna tabla
             </p>
           </router-link>
         </li> 

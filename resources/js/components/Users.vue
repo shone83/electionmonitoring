@@ -19,6 +19,7 @@
                   <th>ID</th>
                   <th>Ime</th>
                   <th>Korisničko ime</th>
+                  <th>Grad/Opština</th>
                   <th>Status</th>
                   <th>Email</th>
                   <th>Registrovan</th>
@@ -27,6 +28,7 @@
                   <td>{{ user.id }}</td>
                   <td>{{ user.name }}</td>
                   <td>{{ user.username }}</td>
+                  <td>{{ user.town.name }}</td>
                   <td>{{ user.role.name }}</td>
                   <td>{{ user.email }}</td>
                   <td>{{ user.created_at | myDate }}</td>
@@ -71,6 +73,13 @@
                   <has-error :form="form" field="username"></has-error>
                 </div>
                 <div class="form-group">
+                    <select name="town_id" class="form-control" v-model="form.town_id" :class="{ 'is-invalid': form.errors.has('type') }">
+                        <option value="">Izaberite grad/opštinu</option>
+                        <option v-for="town in towns" v-bind:key="town.id" :value="town.id" v-if="town">{{ town.name }}</option>
+                    </select>
+                    <has-error :form="form" field="town_id"></has-error>
+                </div>
+                <div class="form-group">
                     <select name="role_id" class="form-control" v-model="form.role_id" :class="{ 'is-invalid': form.errors.has('type') }">
                         <option value="">Izaberite status</option>
                         <option v-for="role in roles" v-bind:key="role.id" :value="role.id">{{ role.name }}</option>
@@ -105,12 +114,14 @@
         data() {
             return {
               editmode: false,
+              towns: {},
               roles: {},
               users: {},
               form: new Form({
                 id: '',
                 name: '',
                 username: '',
+                town_id: '',
                 role_id: '',
                 email: '',
                 password: ''
@@ -180,6 +191,10 @@
               axios.get('api/user').then(({ data }) => (this.users = data));
             },
 
+            loadTowns() {
+              axios.get('api/town').then(response => { this.towns = response.data.data; });
+            },
+
             loadRoles() {
               axios.get('api/role').then(({ data }) => (this.roles = data));
             },
@@ -207,6 +222,7 @@
         },
 
         created() {
+            this.loadTowns();
             this.loadRoles();
             this.loadUsers();
             Fire.$on('AfterIsDone', () => {

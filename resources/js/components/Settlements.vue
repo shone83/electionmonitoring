@@ -8,7 +8,7 @@
 
               <div class="box-tools float-right">
                 <button type="submit" class="btn btn-primary btn-sm" @click="newModal">Dodati 
-                    <i class="fa fa-city fa-fw"></i>
+                    <i class="fa fa-plus fa-fw"></i>
                 </button>
               </div>
             </div>

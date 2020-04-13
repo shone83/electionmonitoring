@@ -28,7 +28,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        return User::with('role')->latest()->paginate(10);
+        return User::with('town')->with('role')->latest()->paginate(10);
     }
 
     /**
