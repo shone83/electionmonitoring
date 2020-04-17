@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\DistrictsRequest;
 use App\District;
 
 class DistrictsController extends Controller
@@ -24,7 +25,7 @@ class DistrictsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DistrictsRequest $request)
     {
         return District::create([
             'name' => $request['name']
@@ -49,7 +50,7 @@ class DistrictsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(DistrictsRequest $request, $id)
     {
         $district = District::findOrFail($id);
 

@@ -5,6 +5,6 @@
 <!-- CSRF Token -->
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
-<title>AdminLTE 3 | Starter</title>
+<title>Election Monitoring</title>
 
 <link rel="stylesheet" href="/css/app.css">

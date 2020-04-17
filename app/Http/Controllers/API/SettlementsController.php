@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\SettlementsRequest;
 use App\Settlement;
 
 class SettlementsController extends Controller
@@ -15,7 +16,7 @@ class SettlementsController extends Controller
      */
     public function index()
     {
-        return Settlement::with('town')->paginate(20)->toJson();
+        return Settlement::with('town')->paginate(10)->toJson();
     }
 
     /**
@@ -24,7 +25,7 @@ class SettlementsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SettlementsRequest $request)
     {
         return Settlement::create([
             'town_id' => $request['town_id'],
@@ -50,7 +51,7 @@ class SettlementsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SettlementsRequest $request, $id)
     {
         $settlement = Settlement::findOrFail($id);
 

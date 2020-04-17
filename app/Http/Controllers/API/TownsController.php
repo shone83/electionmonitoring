@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\TownsRequest;
 use App\Town;
 
 class TownsController extends Controller
@@ -24,7 +25,7 @@ class TownsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TownsRequest $request)
     {
         return Town::create([
             'district_id' => $request['district_id'],
@@ -52,7 +53,7 @@ class TownsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(TownsRequest $request, $id)
     {
         $town = Town::findOrFail($id);
 

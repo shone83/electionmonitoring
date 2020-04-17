@@ -24,3 +24,4 @@ Route::apiResources(['district' => 'API\DistrictsController']);
 Route::apiResources(['town' => 'API\TownsController']);
 Route::apiResources(['settlement' => 'API\SettlementsController']);
 Route::apiResources(['electoral_unit' => 'API\ElectoralUnitsController']);
+Route::apiResources(['local_list' => 'API\LocalListsController']);

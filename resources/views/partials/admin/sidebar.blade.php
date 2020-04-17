@@ -57,6 +57,35 @@
             </li>
           </ul>
         </li>
+        <li class="nav-item has-treeview">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-list-ol green"></i>
+            <p>
+              Liste
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <router-link to="/local_list" class="nav-link">
+                <i class="fas fa-street-view nav-icon"></i>
+                <p>Lokalna lista</p>
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link to="#" class="nav-link">
+                <i class="fas fa-flag nav-icon"></i>
+                <p>Republička lista</p>
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link to="#" class="nav-link">
+                <i class="fas fa-user-tie nav-icon"></i>
+                <p>Predsednička lista</p>
+              </router-link>
+            </li>
+          </ul>
+        </li>
         <li class="nav-item">
           <router-link to="/users" class="nav-link">
             <i class="nav-icon fas fa-users blue"></i>
@@ -66,7 +95,7 @@
           </router-link>
         </li> 
         <li class="nav-item">
-          <router-link to="#" class="nav-link">
+          <router-link to="/statistic" class="nav-link">
             <i class="nav-icon fas fa-chart-bar pink"></i>
             <p>
               Statistika

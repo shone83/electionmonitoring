@@ -35,7 +35,7 @@ class UsersCreateRequest extends FormRequest
     {
         return [
           'name.required'     => 'Morate uneti ime i prezime',
-          'name.max'          => 'Ime i prezime ne moze imati više od 50 karaktera',
+          'name.max'          => 'Ime i prezime ne može imati više od 50 karaktera',
           'username.required' => 'Morate uneti korisničko ime',
           'username.max'      => 'Korisničko ime ne moze imati više od 50 karaktera',
           'username.unique'   => 'Korisničko ime već postoji u bazi',

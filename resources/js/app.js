@@ -8,6 +8,7 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+import { ToggleButton } from 'vue-js-toggle-button'
 import Swal from 'sweetalert2'
 import VueProgressBar from 'vue-progressbar'
 import moment from 'moment'
@@ -27,6 +28,9 @@ import Routes from './routes'
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+
+// Toggle button
+Vue.component('ToggleButton', ToggleButton)
 
 // Custom Event
 let Fire = new Vue()
@@ -65,6 +69,9 @@ Vue.filter('myDate', function(created) {
 window.Form = Form;
 Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
+
+// Pagination
+Vue.component('pagination', require('laravel-vue-pagination'));
 
 // Use packages
 Vue.use(VueRouter)

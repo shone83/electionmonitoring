@@ -2432,6 +2432,247 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/LocalList.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/LocalList.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      // toggled: false,
+      editmode: false,
+      towns: {},
+      local_lists: {},
+      form: new Form({
+        id: '',
+        town_id: '',
+        name: '' // minority: ''
+
+      })
+    };
+  },
+  // mounted() {
+  //     var itemIndex = 0;
+  //     setInterval(() => {
+  //       this.updateItemValue(itemIndex)
+  //       itemIndex = (itemIndex + 1) % this.items.length
+  //     }, 600)
+  // },
+  methods: {
+    // updateItemValue(index) {
+    //   this.items[index].value = !this.items[index].value
+    // },
+    getResults: function getResults() {
+      var _this = this;
+
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios.get('api/local_list?page=' + page).then(function (response) {
+        _this.local_lists = response.data;
+      });
+    },
+    updateLocalList: function updateLocalList() {
+      var _this2 = this;
+
+      this.$Progress.start();
+      this.form.put('api/local_list/' + this.form.id).then(function () {
+        $('#addNew').modal('hide');
+        Toast.fire({
+          icon: 'success',
+          title: 'Lokalna lista uspešno izmenjena!'
+        });
+
+        _this2.$Progress.finish();
+
+        Fire.$emit('AfterIsDone');
+      })["catch"](function () {
+        _this2.$Progress.fail();
+      });
+    },
+    editModal: function editModal(local_list) {
+      this.editmode = true;
+      this.form.reset();
+      $('#addNew').modal('show');
+      this.form.fill(local_list);
+    },
+    newModal: function newModal() {
+      this.editmode = false;
+      this.form.reset();
+      $('#addNew').modal('show');
+    },
+    deleteLocalList: function deleteLocalList(id) {
+      var _this3 = this;
+
+      Swal.fire({
+        title: 'Da li ste sigurni?',
+        text: "Nećete moći da vratite podatke!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#808080',
+        confirmButtonText: 'Da, obrisati!',
+        cancelButtonText: 'Odustati'
+      }).then(function (result) {
+        if (result.value) {
+          // Send request to the server
+          _this3.form["delete"]('api/local_list/' + id).then(function () {
+            Toast.fire({
+              icon: 'success',
+              title: 'Lokalna lista uspešno obrisana!'
+            });
+            Fire.$emit('AfterIsDone');
+          })["catch"](function () {
+            Swal("Nije uspelo!", "Nešto nije u redu!", "warning");
+          });
+        }
+      });
+    },
+    loadLocalLists: function loadLocalLists() {
+      var _this4 = this;
+
+      axios.get('api/local_list').then(function (_ref) {
+        var data = _ref.data;
+        return _this4.local_lists = data;
+      });
+    },
+    loadTowns: function loadTowns() {
+      var _this5 = this;
+
+      axios.get('api/town').then(function (response) {
+        _this5.towns = response.data.data;
+      });
+    },
+    createLocalList: function createLocalList() {
+      var _this6 = this;
+
+      this.$Progress.start();
+      this.form.post('api/local_list').then(function () {
+        Fire.$emit('AfterIsDone');
+        $('#addNew').modal('hide');
+        Toast.fire({
+          icon: 'success',
+          title: 'Lokalna lista uspešno kreirana!'
+        });
+
+        _this6.$Progress.finish();
+      })["catch"](function () {
+        _this6.$Progress.fail();
+      });
+    }
+  },
+  created: function created() {
+    var _this7 = this;
+
+    this.loadTowns();
+    this.loadLocalLists();
+    Fire.$on('AfterIsDone', function () {
+      _this7.loadLocalLists();
+    });
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Roles.vue?vue&type=script&lang=js&":
 /*!****************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Roles.vue?vue&type=script&lang=js& ***!
@@ -2555,6 +2796,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2569,8 +2813,16 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    updateSettlement: function updateSettlement() {
+    getResults: function getResults() {
       var _this = this;
+
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios.get('api/settlement?page=' + page).then(function (response) {
+        _this.settlements = response.data;
+      });
+    },
+    updateSettlement: function updateSettlement() {
+      var _this2 = this;
 
       this.$Progress.start();
       this.form.put('api/settlement/' + this.form.id).then(function () {
@@ -2580,11 +2832,11 @@ __webpack_require__.r(__webpack_exports__);
           title: 'Mesni odbor uspešno izmenjen!'
         });
 
-        _this.$Progress.finish();
+        _this2.$Progress.finish();
 
         Fire.$emit('AfterIsDone');
       })["catch"](function () {
-        _this.$Progress.fail();
+        _this2.$Progress.fail();
       });
     },
     editModal: function editModal(settlement) {
@@ -2599,7 +2851,7 @@ __webpack_require__.r(__webpack_exports__);
       $('#addNew').modal('show');
     },
     deleteSettlement: function deleteSettlement(id) {
-      var _this2 = this;
+      var _this3 = this;
 
       Swal.fire({
         title: 'Da li ste sigurni?',
@@ -2613,7 +2865,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (result) {
         if (result.value) {
           // Send request to the server
-          _this2.form["delete"]('api/settlement/' + id).then(function () {
+          _this3.form["delete"]('api/settlement/' + id).then(function () {
             Toast.fire({
               icon: 'success',
               title: 'Mesni odbor uspešno obrisan!'
@@ -2626,22 +2878,22 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     loadSettlements: function loadSettlements() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.get('api/settlement').then(function (_ref) {
         var data = _ref.data;
-        return _this3.settlements = data;
+        return _this4.settlements = data;
       });
     },
     loadTowns: function loadTowns() {
-      var _this4 = this;
+      var _this5 = this;
 
       axios.get('api/town').then(function (response) {
-        _this4.towns = response.data.data;
+        _this5.towns = response.data.data;
       });
     },
     createSettlement: function createSettlement() {
-      var _this5 = this;
+      var _this6 = this;
 
       this.$Progress.start();
       this.form.post('api/settlement').then(function () {
@@ -2652,20 +2904,139 @@ __webpack_require__.r(__webpack_exports__);
           title: 'Mesni odbor uspešno kreiran!'
         });
 
-        _this5.$Progress.finish();
+        _this6.$Progress.finish();
       })["catch"](function () {
-        _this5.$Progress.fail();
+        _this6.$Progress.fail();
       });
     }
   },
   created: function created() {
-    var _this6 = this;
+    var _this7 = this;
 
     this.loadTowns();
     this.loadSettlements();
     Fire.$on('AfterIsDone', function () {
-      _this6.loadSettlements();
+      _this7.loadSettlements();
     });
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Statistic.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Statistic.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mounted: function mounted() {
+    console.log('Component mounted.');
   }
 });
 
@@ -19247,6 +19618,599 @@ if ( !noGlobal ) {
 return jQuery;
 } );
 
+
+/***/ }),
+
+/***/ "./node_modules/laravel-vue-pagination/dist/laravel-vue-pagination.common.js":
+/*!***********************************************************************************!*\
+  !*** ./node_modules/laravel-vue-pagination/dist/laravel-vue-pagination.common.js ***!
+  \***********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports =
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "fb15");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "f6fd":
+/***/ (function(module, exports) {
+
+// document.currentScript polyfill by Adam Miller
+
+// MIT license
+
+(function(document){
+  var currentScript = "currentScript",
+      scripts = document.getElementsByTagName('script'); // Live NodeList collection
+
+  // If browser needs currentScript polyfill, add get currentScript() to the document object
+  if (!(currentScript in document)) {
+    Object.defineProperty(document, currentScript, {
+      get: function(){
+
+        // IE 6-10 supports script readyState
+        // IE 10+ support stack trace
+        try { throw new Error(); }
+        catch (err) {
+
+          // Find the second match for the "at" string to get file src url from stack.
+          // Specifically works with the format of stack traces in IE.
+          var i, res = ((/.*at [^\(]*\((.*):.+:.+\)$/ig).exec(err.stack) || [false])[1];
+
+          // For all scripts on the page, if src matches or if ready state is interactive, return the script tag
+          for(i in scripts){
+            if(scripts[i].src == res || scripts[i].readyState == "interactive"){
+              return scripts[i];
+            }
+          }
+
+          // If no match, return null
+          return null;
+        }
+      }
+    });
+  }
+})(document);
+
+
+/***/ }),
+
+/***/ "fb15":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+
+// CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/setPublicPath.js
+// This file is imported into lib/wc client bundles.
+
+if (typeof window !== 'undefined') {
+  if (true) {
+    __webpack_require__("f6fd")
+  }
+
+  var i
+  if ((i = window.document.currentScript) && (i = i.src.match(/(.+\/)[^/]+\.js(\?.*)?$/))) {
+    __webpack_require__.p = i[1] // eslint-disable-line
+  }
+}
+
+// Indicate to webpack that this file can be concatenated
+/* harmony default export */ var setPublicPath = (null);
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"604a59b1-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/LaravelVuePagination.vue?vue&type=template&id=7f71b5a7&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('renderless-laravel-vue-pagination',{attrs:{"data":_vm.data,"limit":_vm.limit,"show-disabled":_vm.showDisabled,"size":_vm.size,"align":_vm.align},on:{"pagination-change-page":_vm.onPaginationChangePage},scopedSlots:_vm._u([{key:"default",fn:function(ref){
+var data = ref.data;
+var limit = ref.limit;
+var showDisabled = ref.showDisabled;
+var size = ref.size;
+var align = ref.align;
+var computed = ref.computed;
+var prevButtonEvents = ref.prevButtonEvents;
+var nextButtonEvents = ref.nextButtonEvents;
+var pageButtonEvents = ref.pageButtonEvents;
+return (computed.total > computed.perPage)?_c('ul',{staticClass:"pagination",class:{
+            'pagination-sm': size == 'small',
+            'pagination-lg': size == 'large',
+            'justify-content-center': align == 'center',
+            'justify-content-end': align == 'right'
+        }},[(computed.prevPageUrl || showDisabled)?_c('li',{staticClass:"page-item pagination-prev-nav",class:{'disabled': !computed.prevPageUrl}},[_c('a',_vm._g({staticClass:"page-link",attrs:{"href":"#","aria-label":"Previous","tabindex":!computed.prevPageUrl && -1}},prevButtonEvents),[_vm._t("prev-nav",[_c('span',{attrs:{"aria-hidden":"true"}},[_vm._v("«")]),_c('span',{staticClass:"sr-only"},[_vm._v("Previous")])])],2)]):_vm._e(),_vm._l((computed.pageRange),function(page,key){return _c('li',{key:key,staticClass:"page-item pagination-page-nav",class:{ 'active': page == computed.currentPage }},[_c('a',_vm._g({staticClass:"page-link",attrs:{"href":"#"}},pageButtonEvents(page)),[_vm._v("\n                "+_vm._s(page)+"\n                "),(page == computed.currentPage)?_c('span',{staticClass:"sr-only"},[_vm._v("(current)")]):_vm._e()])])}),(computed.nextPageUrl || showDisabled)?_c('li',{staticClass:"page-item pagination-next-nav",class:{'disabled': !computed.nextPageUrl}},[_c('a',_vm._g({staticClass:"page-link",attrs:{"href":"#","aria-label":"Next","tabindex":!computed.nextPageUrl && -1}},nextButtonEvents),[_vm._t("next-nav",[_c('span',{attrs:{"aria-hidden":"true"}},[_vm._v("»")]),_c('span',{staticClass:"sr-only"},[_vm._v("Next")])])],2)]):_vm._e()],2):_vm._e()}}],null,true)})}
+var staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/LaravelVuePagination.vue?vue&type=template&id=7f71b5a7&
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/RenderlessLaravelVuePagination.vue?vue&type=script&lang=js&
+/* harmony default export */ var RenderlessLaravelVuePaginationvue_type_script_lang_js_ = ({
+  props: {
+    data: {
+      type: Object,
+      default: function _default() {}
+    },
+    limit: {
+      type: Number,
+      default: 0
+    },
+    showDisabled: {
+      type: Boolean,
+      default: false
+    },
+    size: {
+      type: String,
+      default: 'default',
+      validator: function validator(value) {
+        return ['small', 'default', 'large'].indexOf(value) !== -1;
+      }
+    },
+    align: {
+      type: String,
+      default: 'left',
+      validator: function validator(value) {
+        return ['left', 'center', 'right'].indexOf(value) !== -1;
+      }
+    }
+  },
+  computed: {
+    isApiResource: function isApiResource() {
+      return !!this.data.meta;
+    },
+    currentPage: function currentPage() {
+      return this.isApiResource ? this.data.meta.current_page : this.data.current_page;
+    },
+    firstPageUrl: function firstPageUrl() {
+      return this.isApiResource ? this.data.links.first : null;
+    },
+    from: function from() {
+      return this.isApiResource ? this.data.meta.from : this.data.from;
+    },
+    lastPage: function lastPage() {
+      return this.isApiResource ? this.data.meta.last_page : this.data.last_page;
+    },
+    lastPageUrl: function lastPageUrl() {
+      return this.isApiResource ? this.data.links.last : null;
+    },
+    nextPageUrl: function nextPageUrl() {
+      return this.isApiResource ? this.data.links.next : this.data.next_page_url;
+    },
+    perPage: function perPage() {
+      return this.isApiResource ? this.data.meta.per_page : this.data.per_page;
+    },
+    prevPageUrl: function prevPageUrl() {
+      return this.isApiResource ? this.data.links.prev : this.data.prev_page_url;
+    },
+    to: function to() {
+      return this.isApiResource ? this.data.meta.to : this.data.to;
+    },
+    total: function total() {
+      return this.isApiResource ? this.data.meta.total : this.data.total;
+    },
+    pageRange: function pageRange() {
+      if (this.limit === -1) {
+        return 0;
+      }
+
+      if (this.limit === 0) {
+        return this.lastPage;
+      }
+
+      var current = this.currentPage;
+      var last = this.lastPage;
+      var delta = this.limit;
+      var left = current - delta;
+      var right = current + delta + 1;
+      var range = [];
+      var pages = [];
+      var l;
+
+      for (var i = 1; i <= last; i++) {
+        if (i === 1 || i === last || i >= left && i < right) {
+          range.push(i);
+        }
+      }
+
+      range.forEach(function (i) {
+        if (l) {
+          if (i - l === 2) {
+            pages.push(l + 1);
+          } else if (i - l !== 1) {
+            pages.push('...');
+          }
+        }
+
+        pages.push(i);
+        l = i;
+      });
+      return pages;
+    }
+  },
+  methods: {
+    previousPage: function previousPage() {
+      this.selectPage(this.currentPage - 1);
+    },
+    nextPage: function nextPage() {
+      this.selectPage(this.currentPage + 1);
+    },
+    selectPage: function selectPage(page) {
+      if (page === '...') {
+        return;
+      }
+
+      this.$emit('pagination-change-page', page);
+    }
+  },
+  render: function render() {
+    var _this = this;
+
+    return this.$scopedSlots.default({
+      data: this.data,
+      limit: this.limit,
+      showDisabled: this.showDisabled,
+      size: this.size,
+      align: this.align,
+      computed: {
+        isApiResource: this.isApiResource,
+        currentPage: this.currentPage,
+        firstPageUrl: this.firstPageUrl,
+        from: this.from,
+        lastPage: this.lastPage,
+        lastPageUrl: this.lastPageUrl,
+        nextPageUrl: this.nextPageUrl,
+        perPage: this.perPage,
+        prevPageUrl: this.prevPageUrl,
+        to: this.to,
+        total: this.total,
+        pageRange: this.pageRange
+      },
+      prevButtonEvents: {
+        click: function click(e) {
+          e.preventDefault();
+
+          _this.previousPage();
+        }
+      },
+      nextButtonEvents: {
+        click: function click(e) {
+          e.preventDefault();
+
+          _this.nextPage();
+        }
+      },
+      pageButtonEvents: function pageButtonEvents(page) {
+        return {
+          click: function click(e) {
+            e.preventDefault();
+
+            _this.selectPage(page);
+          }
+        };
+      }
+    });
+  }
+});
+// CONCATENATED MODULE: ./src/RenderlessLaravelVuePagination.vue?vue&type=script&lang=js&
+ /* harmony default export */ var src_RenderlessLaravelVuePaginationvue_type_script_lang_js_ = (RenderlessLaravelVuePaginationvue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier, /* server only */
+  shadowMode /* vue-cli only */
+) {
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = 'data-v-' + scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = shadowMode
+      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
+      : injectStyles
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      var originalRender = options.render
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return originalRender(h, context)
+      }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    }
+  }
+
+  return {
+    exports: scriptExports,
+    options: options
+  }
+}
+
+// CONCATENATED MODULE: ./src/RenderlessLaravelVuePagination.vue
+var RenderlessLaravelVuePagination_render, RenderlessLaravelVuePagination_staticRenderFns
+
+
+
+
+/* normalize component */
+
+var component = normalizeComponent(
+  src_RenderlessLaravelVuePaginationvue_type_script_lang_js_,
+  RenderlessLaravelVuePagination_render,
+  RenderlessLaravelVuePagination_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* harmony default export */ var RenderlessLaravelVuePagination = (component.exports);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/LaravelVuePagination.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ var LaravelVuePaginationvue_type_script_lang_js_ = ({
+  props: {
+    data: {
+      type: Object,
+      default: function _default() {}
+    },
+    limit: {
+      type: Number,
+      default: 0
+    },
+    showDisabled: {
+      type: Boolean,
+      default: false
+    },
+    size: {
+      type: String,
+      default: 'default',
+      validator: function validator(value) {
+        return ['small', 'default', 'large'].indexOf(value) !== -1;
+      }
+    },
+    align: {
+      type: String,
+      default: 'left',
+      validator: function validator(value) {
+        return ['left', 'center', 'right'].indexOf(value) !== -1;
+      }
+    }
+  },
+  methods: {
+    onPaginationChangePage: function onPaginationChangePage(page) {
+      this.$emit('pagination-change-page', page);
+    }
+  },
+  components: {
+    RenderlessLaravelVuePagination: RenderlessLaravelVuePagination
+  }
+});
+// CONCATENATED MODULE: ./src/LaravelVuePagination.vue?vue&type=script&lang=js&
+ /* harmony default export */ var src_LaravelVuePaginationvue_type_script_lang_js_ = (LaravelVuePaginationvue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/LaravelVuePagination.vue
+
+
+
+
+
+/* normalize component */
+
+var LaravelVuePagination_component = normalizeComponent(
+  src_LaravelVuePaginationvue_type_script_lang_js_,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* harmony default export */ var LaravelVuePagination = (LaravelVuePagination_component.exports);
+// CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/entry-lib.js
+
+
+/* harmony default export */ var entry_lib = __webpack_exports__["default"] = (LaravelVuePagination);
+
+
+
+/***/ })
+
+/******/ })["default"];
+//# sourceMappingURL=laravel-vue-pagination.common.js.map
 
 /***/ }),
 
@@ -61766,6 +62730,865 @@ AlertSuccess_component.options.__file = "AlertSuccess.vue"
 
 /***/ }),
 
+/***/ "./node_modules/vue-js-toggle-button/dist/index.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/vue-js-toggle-button/dist/index.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(true)
+		module.exports = factory();
+	else {}
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// identity function for calling harmony imports with the correct context
+/******/ 	__webpack_require__.i = function(value) { return value; };
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/dist/";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(8)
+
+var Component = __webpack_require__(6)(
+  /* script */
+  __webpack_require__(1),
+  /* template */
+  __webpack_require__(7),
+  /* scopeId */
+  "data-v-25adc6c0",
+  /* cssModules */
+  null
+)
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils__ = __webpack_require__(3);
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+var DEFAULT_COLOR_CHECKED = '#75c791';
+var DEFAULT_COLOR_UNCHECKED = '#bfcbd9';
+var DEFAULT_LABEL_CHECKED = 'on';
+var DEFAULT_LABEL_UNCHECKED = 'off';
+var DEFAULT_SWITCH_COLOR = '#fff';
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'ToggleButton',
+  props: {
+    value: {
+      type: Boolean,
+      default: false
+    },
+    name: {
+      type: String
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    tag: {
+      type: String
+    },
+    sync: {
+      type: Boolean,
+      default: false
+    },
+    speed: {
+      type: Number,
+      default: 300
+    },
+    color: {
+      type: [String, Object],
+      validator: function validator(value) {
+        return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["a" /* isString */])(value) || __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["b" /* has */])(value, 'checked') || __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["b" /* has */])(value, 'unchecked') || __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["b" /* has */])(value, 'disabled');
+      }
+    },
+    switchColor: {
+      type: [String, Object],
+      validator: function validator(value) {
+        return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["a" /* isString */])(value) || __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["b" /* has */])(value, 'checked') || __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["b" /* has */])(value, 'unchecked');
+      }
+    },
+    cssColors: {
+      type: Boolean,
+      default: false
+    },
+    labels: {
+      type: [Boolean, Object],
+      default: false,
+      validator: function validator(value) {
+        return (typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object' ? value.checked || value.unchecked : typeof value === 'boolean';
+      }
+    },
+    height: {
+      type: Number,
+      default: 22
+    },
+    width: {
+      type: Number,
+      default: 50
+    },
+    margin: {
+      type: Number,
+      default: 3
+    },
+    fontSize: {
+      type: Number
+    }
+  },
+  computed: {
+    className: function className() {
+      var toggled = this.toggled,
+          disabled = this.disabled;
+
+
+      return ['vue-js-switch', {
+        toggled: toggled,
+        disabled: disabled
+      }];
+    },
+    coreStyle: function coreStyle() {
+      return {
+        width: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["c" /* px */])(this.width),
+        height: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["c" /* px */])(this.height),
+        backgroundColor: this.cssColors ? null : this.disabled ? this.colorDisabled : this.colorCurrent,
+        borderRadius: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["c" /* px */])(Math.round(this.height / 2))
+      };
+    },
+    buttonRadius: function buttonRadius() {
+      return this.height - this.margin * 2;
+    },
+    distance: function distance() {
+      return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["c" /* px */])(this.width - this.height + this.margin);
+    },
+    buttonStyle: function buttonStyle() {
+      var transition = 'transform ' + this.speed + 'ms';
+      var margin = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["c" /* px */])(this.margin);
+
+      var transform = this.toggled ? __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["d" /* translate3d */])(this.distance, margin) : __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["d" /* translate3d */])(margin, margin);
+
+      var background = this.switchColor ? this.switchColorCurrent : null;
+
+      return {
+        width: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["c" /* px */])(this.buttonRadius),
+        height: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["c" /* px */])(this.buttonRadius),
+        transition: transition,
+        transform: transform,
+        background: background
+      };
+    },
+    labelStyle: function labelStyle() {
+      return {
+        lineHeight: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["c" /* px */])(this.height),
+        fontSize: this.fontSize ? __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["c" /* px */])(this.fontSize) : null
+      };
+    },
+    colorChecked: function colorChecked() {
+      var color = this.color;
+
+
+      if (!__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["e" /* isObject */])(color)) {
+        return color || DEFAULT_COLOR_CHECKED;
+      }
+
+      return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["f" /* get */])(color, 'checked', DEFAULT_COLOR_CHECKED);
+    },
+    colorUnchecked: function colorUnchecked() {
+      return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["f" /* get */])(this.color, 'unchecked', DEFAULT_COLOR_UNCHECKED);
+    },
+    colorDisabled: function colorDisabled() {
+      return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["f" /* get */])(this.color, 'disabled', this.colorCurrent);
+    },
+    colorCurrent: function colorCurrent() {
+      return this.toggled ? this.colorChecked : this.colorUnchecked;
+    },
+    labelChecked: function labelChecked() {
+      return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["f" /* get */])(this.labels, 'checked', DEFAULT_LABEL_CHECKED);
+    },
+    labelUnchecked: function labelUnchecked() {
+      return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["f" /* get */])(this.labels, 'unchecked', DEFAULT_LABEL_UNCHECKED);
+    },
+    switchColorChecked: function switchColorChecked() {
+      return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["f" /* get */])(this.switchColor, 'checked', DEFAULT_SWITCH_COLOR);
+    },
+    switchColorUnchecked: function switchColorUnchecked() {
+      return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["f" /* get */])(this.switchColor, 'unchecked', DEFAULT_SWITCH_COLOR);
+    },
+    switchColorCurrent: function switchColorCurrent() {
+      var switchColor = this.switchColor;
+
+
+      if (!__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["e" /* isObject */])(this.switchColor)) {
+        return this.switchColor || DEFAULT_SWITCH_COLOR;
+      }
+
+      return this.toggled ? this.switchColorChecked : this.switchColorUnchecked;
+    }
+  },
+  watch: {
+    value: function value(_value) {
+      if (this.sync) {
+        this.toggled = !!_value;
+      }
+    }
+  },
+  data: function data() {
+    return {
+      toggled: !!this.value
+    };
+  },
+
+  methods: {
+    toggle: function toggle(event) {
+      var toggled = !this.toggled;
+
+      if (!this.sync) {
+        this.toggled = toggled;
+      }
+
+      this.$emit('input', toggled);
+      this.$emit('change', {
+        value: toggled,
+        tag: this.tag,
+        srcEvent: event
+      });
+    }
+  }
+});
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Button_vue__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Button_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Button_vue__);
+/* harmony reexport (default from non-hamory) */ __webpack_require__.d(__webpack_exports__, "ToggleButton", function() { return __WEBPACK_IMPORTED_MODULE_0__Button_vue___default.a; });
+
+
+var installed = false;
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  install: function install(Vue) {
+    if (installed) {
+      return;
+    }
+
+    Vue.component('ToggleButton', __WEBPACK_IMPORTED_MODULE_0__Button_vue___default.a);
+    installed = true;
+  }
+});
+
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return isString; });
+/* unused harmony export isBoolean */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return isObject; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return has; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return get; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return px; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return translate3d; });
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var isString = function isString(value) {
+  return typeof value === 'string';
+};
+
+var isBoolean = function isBoolean(value) {
+  return typeof value === 'boolean';
+};
+
+var isObject = function isObject(value) {
+  return (typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object';
+};
+
+var has = function has(object, key) {
+  return isObject(object) && object.hasOwnProperty(key);
+};
+
+var get = function get(object, key, defaultValue) {
+  return has(object, key) ? object[key] : defaultValue;
+};
+
+var px = function px(value) {
+  return value + 'px';
+};
+
+var translate3d = function translate3d(x, y) {
+  var z = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '0px';
+
+  return 'translate3d(' + x + ', ' + y + ', ' + z + ')';
+};
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(5)();
+// imports
+
+
+// module
+exports.push([module.i, ".vue-js-switch[data-v-25adc6c0]{display:inline-block;position:relative;vertical-align:middle;user-select:none;font-size:10px;cursor:pointer}.vue-js-switch .v-switch-input[data-v-25adc6c0]{opacity:0;position:absolute;width:1px;height:1px}.vue-js-switch .v-switch-label[data-v-25adc6c0]{position:absolute;top:0;font-weight:600;color:#fff;z-index:1}.vue-js-switch .v-switch-label.v-left[data-v-25adc6c0]{left:10px}.vue-js-switch .v-switch-label.v-right[data-v-25adc6c0]{right:10px}.vue-js-switch .v-switch-core[data-v-25adc6c0]{display:block;position:relative;box-sizing:border-box;outline:0;margin:0;transition:border-color .3s,background-color .3s;user-select:none}.vue-js-switch .v-switch-core .v-switch-button[data-v-25adc6c0]{display:block;position:absolute;overflow:hidden;top:0;left:0;border-radius:100%;background-color:#fff;z-index:2}.vue-js-switch.disabled[data-v-25adc6c0]{pointer-events:none;opacity:.6}", ""]);
+
+// exports
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function() {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		var result = [];
+		for(var i = 0; i < this.length; i++) {
+			var item = this[i];
+			if(item[2]) {
+				result.push("@media " + item[2] + "{" + item[1] + "}");
+			} else {
+				result.push(item[1]);
+			}
+		}
+		return result.join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+// this module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle
+
+module.exports = function normalizeComponent (
+  rawScriptExports,
+  compiledTemplate,
+  scopeId,
+  cssModules
+) {
+  var esModule
+  var scriptExports = rawScriptExports = rawScriptExports || {}
+
+  // ES6 modules interop
+  var type = typeof rawScriptExports.default
+  if (type === 'object' || type === 'function') {
+    esModule = rawScriptExports
+    scriptExports = rawScriptExports.default
+  }
+
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (compiledTemplate) {
+    options.render = compiledTemplate.render
+    options.staticRenderFns = compiledTemplate.staticRenderFns
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = scopeId
+  }
+
+  // inject cssModules
+  if (cssModules) {
+    var computed = Object.create(options.computed || null)
+    Object.keys(cssModules).forEach(function (key) {
+      var module = cssModules[key]
+      computed[key] = function () { return module }
+    })
+    options.computed = computed
+  }
+
+  return {
+    esModule: esModule,
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('label', {
+    class: _vm.className
+  }, [_c('input', {
+    staticClass: "v-switch-input",
+    attrs: {
+      "type": "checkbox",
+      "name": _vm.name,
+      "disabled": _vm.disabled
+    },
+    domProps: {
+      "checked": _vm.value
+    },
+    on: {
+      "change": function($event) {
+        $event.stopPropagation();
+        return _vm.toggle($event)
+      }
+    }
+  }), _vm._v(" "), _c('div', {
+    staticClass: "v-switch-core",
+    style: (_vm.coreStyle)
+  }, [_c('div', {
+    staticClass: "v-switch-button",
+    style: (_vm.buttonStyle)
+  })]), _vm._v(" "), (_vm.labels) ? [(_vm.toggled) ? _c('span', {
+    staticClass: "v-switch-label v-left",
+    style: (_vm.labelStyle)
+  }, [_vm._t("checked", [
+    [_vm._v(_vm._s(_vm.labelChecked))]
+  ])], 2) : _c('span', {
+    staticClass: "v-switch-label v-right",
+    style: (_vm.labelStyle)
+  }, [_vm._t("unchecked", [
+    [_vm._v(_vm._s(_vm.labelUnchecked))]
+  ])], 2)] : _vm._e()], 2)
+},staticRenderFns: []}
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(4);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(9)("2283861f", content, true);
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+  Modified by Evan You @yyx990803
+*/
+
+var hasDocument = typeof document !== 'undefined'
+
+if (typeof DEBUG !== 'undefined' && DEBUG) {
+  if (!hasDocument) {
+    throw new Error(
+    'vue-style-loader cannot be used in a non-browser environment. ' +
+    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
+  ) }
+}
+
+var listToStyles = __webpack_require__(10)
+
+/*
+type StyleObject = {
+  id: number;
+  parts: Array<StyleObjectPart>
+}
+
+type StyleObjectPart = {
+  css: string;
+  media: string;
+  sourceMap: ?string
+}
+*/
+
+var stylesInDom = {/*
+  [id: number]: {
+    id: number,
+    refs: number,
+    parts: Array<(obj?: StyleObjectPart) => void>
+  }
+*/}
+
+var head = hasDocument && (document.head || document.getElementsByTagName('head')[0])
+var singletonElement = null
+var singletonCounter = 0
+var isProduction = false
+var noop = function () {}
+
+// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+// tags it will allow on a page
+var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase())
+
+module.exports = function (parentId, list, _isProduction) {
+  isProduction = _isProduction
+
+  var styles = listToStyles(parentId, list)
+  addStylesToDom(styles)
+
+  return function update (newList) {
+    var mayRemove = []
+    for (var i = 0; i < styles.length; i++) {
+      var item = styles[i]
+      var domStyle = stylesInDom[item.id]
+      domStyle.refs--
+      mayRemove.push(domStyle)
+    }
+    if (newList) {
+      styles = listToStyles(parentId, newList)
+      addStylesToDom(styles)
+    } else {
+      styles = []
+    }
+    for (var i = 0; i < mayRemove.length; i++) {
+      var domStyle = mayRemove[i]
+      if (domStyle.refs === 0) {
+        for (var j = 0; j < domStyle.parts.length; j++) {
+          domStyle.parts[j]()
+        }
+        delete stylesInDom[domStyle.id]
+      }
+    }
+  }
+}
+
+function addStylesToDom (styles /* Array<StyleObject> */) {
+  for (var i = 0; i < styles.length; i++) {
+    var item = styles[i]
+    var domStyle = stylesInDom[item.id]
+    if (domStyle) {
+      domStyle.refs++
+      for (var j = 0; j < domStyle.parts.length; j++) {
+        domStyle.parts[j](item.parts[j])
+      }
+      for (; j < item.parts.length; j++) {
+        domStyle.parts.push(addStyle(item.parts[j]))
+      }
+      if (domStyle.parts.length > item.parts.length) {
+        domStyle.parts.length = item.parts.length
+      }
+    } else {
+      var parts = []
+      for (var j = 0; j < item.parts.length; j++) {
+        parts.push(addStyle(item.parts[j]))
+      }
+      stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts }
+    }
+  }
+}
+
+function createStyleElement () {
+  var styleElement = document.createElement('style')
+  styleElement.type = 'text/css'
+  head.appendChild(styleElement)
+  return styleElement
+}
+
+function addStyle (obj /* StyleObjectPart */) {
+  var update, remove
+  var styleElement = document.querySelector('style[data-vue-ssr-id~="' + obj.id + '"]')
+
+  if (styleElement) {
+    if (isProduction) {
+      // has SSR styles and in production mode.
+      // simply do nothing.
+      return noop
+    } else {
+      // has SSR styles but in dev mode.
+      // for some reason Chrome can't handle source map in server-rendered
+      // style tags - source maps in <style> only works if the style tag is
+      // created and inserted dynamically. So we remove the server rendered
+      // styles and inject new ones.
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  if (isOldIE) {
+    // use singleton mode for IE9.
+    var styleIndex = singletonCounter++
+    styleElement = singletonElement || (singletonElement = createStyleElement())
+    update = applyToSingletonTag.bind(null, styleElement, styleIndex, false)
+    remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
+  } else {
+    // use multi-style-tag mode in all other cases
+    styleElement = createStyleElement()
+    update = applyToTag.bind(null, styleElement)
+    remove = function () {
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  update(obj)
+
+  return function updateStyle (newObj /* StyleObjectPart */) {
+    if (newObj) {
+      if (newObj.css === obj.css &&
+          newObj.media === obj.media &&
+          newObj.sourceMap === obj.sourceMap) {
+        return
+      }
+      update(obj = newObj)
+    } else {
+      remove()
+    }
+  }
+}
+
+var replaceText = (function () {
+  var textStore = []
+
+  return function (index, replacement) {
+    textStore[index] = replacement
+    return textStore.filter(Boolean).join('\n')
+  }
+})()
+
+function applyToSingletonTag (styleElement, index, remove, obj) {
+  var css = remove ? '' : obj.css
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = replaceText(index, css)
+  } else {
+    var cssNode = document.createTextNode(css)
+    var childNodes = styleElement.childNodes
+    if (childNodes[index]) styleElement.removeChild(childNodes[index])
+    if (childNodes.length) {
+      styleElement.insertBefore(cssNode, childNodes[index])
+    } else {
+      styleElement.appendChild(cssNode)
+    }
+  }
+}
+
+function applyToTag (styleElement, obj) {
+  var css = obj.css
+  var media = obj.media
+  var sourceMap = obj.sourceMap
+
+  if (media) {
+    styleElement.setAttribute('media', media)
+  }
+
+  if (sourceMap) {
+    // https://developer.chrome.com/devtools/docs/javascript-debugging
+    // this makes source maps inside style tags work properly in Chrome
+    css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
+    // http://stackoverflow.com/a/26603875
+    css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
+  }
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = css
+  } else {
+    while (styleElement.firstChild) {
+      styleElement.removeChild(styleElement.firstChild)
+    }
+    styleElement.appendChild(document.createTextNode(css))
+  }
+}
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports) {
+
+/**
+ * Translates the list format produced by css-loader into something
+ * easier to manipulate.
+ */
+module.exports = function listToStyles (parentId, list) {
+  var styles = []
+  var newStyles = {}
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i]
+    var id = item[0]
+    var css = item[1]
+    var media = item[2]
+    var sourceMap = item[3]
+    var part = {
+      id: parentId + ':' + i,
+      css: css,
+      media: media,
+      sourceMap: sourceMap
+    }
+    if (!newStyles[id]) {
+      styles.push(newStyles[id] = { id: id, parts: [part] })
+    } else {
+      newStyles[id].parts.push(part)
+    }
+  }
+  return styles
+}
+
+
+/***/ })
+/******/ ]);
+});
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Dashboard.vue?vue&type=template&id=040e2ab9&":
 /*!************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Dashboard.vue?vue&type=template&id=040e2ab9& ***!
@@ -62724,6 +64547,374 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/LocalList.vue?vue&type=template&id=283b844e&":
+/*!************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/LocalList.vue?vue&type=template&id=283b844e& ***!
+  \************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row mt-5" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "box" }, [
+          _c("div", { staticClass: "box-header" }, [
+            _c("h3", { staticClass: "box-title" }, [_vm._v("Lokalna lista")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "box-tools float-right" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary btn-sm",
+                  attrs: { type: "submit" },
+                  on: { click: _vm.newModal }
+                },
+                [
+                  _vm._v("Dodati \n                "),
+                  _c("i", { staticClass: "fa fa-plus fa-fw" })
+                ]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "box-body table-responsive no-padding" }, [
+            _c("table", { staticClass: "table table-hover" }, [
+              _c(
+                "tbody",
+                [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _vm._l(_vm.local_lists.data, function(local_list) {
+                    return _c("tr", { key: local_list.id }, [
+                      _c("td", [_vm._v(_vm._s(local_list.id))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(local_list.name))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(local_list.town.name))]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c(
+                          "a",
+                          {
+                            attrs: { href: "#" },
+                            on: {
+                              click: function($event) {
+                                return _vm.editModal(local_list)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-edit" })]
+                        ),
+                        _vm._v("\n                  /\n                  "),
+                        _c(
+                          "a",
+                          {
+                            attrs: { href: "#" },
+                            on: {
+                              click: function($event) {
+                                return _vm.deleteLocalList(local_list.id)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-trash red" })]
+                        )
+                      ])
+                    ])
+                  })
+                ],
+                2
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "box-footer" },
+            [
+              _c("pagination", {
+                attrs: { data: _vm.local_lists, align: "center" },
+                on: { "pagination-change-page": _vm.getResults }
+              })
+            ],
+            1
+          )
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "addNew",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "addNewLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c(
+                  "h5",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: !_vm.editmode,
+                        expression: "!editmode"
+                      }
+                    ],
+                    staticClass: "modal-title",
+                    attrs: { id: "addNewLabel" }
+                  },
+                  [_vm._v("Dodati stranku")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "h5",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.editmode,
+                        expression: "editmode"
+                      }
+                    ],
+                    staticClass: "modal-title",
+                    attrs: { id: "addNewLabel" }
+                  },
+                  [_vm._v("Izmeniti stranku")]
+                ),
+                _vm._v(" "),
+                _vm._m(1)
+              ]),
+              _vm._v(" "),
+              _c(
+                "form",
+                {
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      _vm.editmode
+                        ? _vm.updateLocalList()
+                        : _vm.createLocalList()
+                    }
+                  }
+                },
+                [
+                  _c("div", { staticClass: "modal-body" }, [
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.name,
+                              expression: "form.name"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: { "is-invalid": _vm.form.errors.has("name") },
+                          attrs: {
+                            type: "text",
+                            name: "name",
+                            placeholder: "Stranka"
+                          },
+                          domProps: { value: _vm.form.name },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "name", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "name" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.town_id,
+                                expression: "form.town_id"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            class: {
+                              "is-invalid": _vm.form.errors.has("type")
+                            },
+                            attrs: { name: "town_id" },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.form,
+                                  "town_id",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
+                            }
+                          },
+                          [
+                            _c("option", { attrs: { value: "" } }, [
+                              _vm._v("Izaberite grad/opštinu")
+                            ]),
+                            _vm._v(" "),
+                            _vm._l(_vm.towns, function(town) {
+                              return _c(
+                                "option",
+                                { key: town.id, domProps: { value: town.id } },
+                                [_vm._v(_vm._s(town.name))]
+                              )
+                            })
+                          ],
+                          2
+                        ),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "town_id" }
+                        })
+                      ],
+                      1
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-footer" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-secondary",
+                        attrs: { type: "button", "data-dismiss": "modal" }
+                      },
+                      [_vm._v("Zatvori")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.editmode,
+                            expression: "editmode"
+                          }
+                        ],
+                        staticClass: "btn btn-info",
+                        attrs: { type: "submit" }
+                      },
+                      [_vm._v("Izmeniti")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: !_vm.editmode,
+                            expression: "!editmode"
+                          }
+                        ],
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "submit" }
+                      },
+                      [_vm._v("Dodati")]
+                    )
+                  ])
+                ]
+              )
+            ])
+          ]
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("th", [_vm._v("ID")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Lokalna lista")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Grad/Opština")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Roles.vue?vue&type=template&id=312d3e3c&":
 /*!********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Roles.vue?vue&type=template&id=312d3e3c& ***!
@@ -62855,7 +65046,19 @@ var render = function() {
                 2
               )
             ])
-          ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "box-footer" },
+            [
+              _c("pagination", {
+                attrs: { data: _vm.settlements, align: "center" },
+                on: { "pagination-change-page": _vm.getResults }
+              })
+            ],
+            1
+          )
         ])
       ])
     ]),
@@ -63121,6 +65324,2228 @@ var staticRenderFns = [
         }
       },
       [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Statistic.vue?vue&type=template&id=1657fb75&":
+/*!************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Statistic.vue?vue&type=template&id=1657fb75& ***!
+  \************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("div", { staticClass: "box box-primary" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "box-body chart-responsive" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "chart",
+                  staticStyle: {
+                    height: "300px",
+                    "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                  },
+                  attrs: { id: "revenue-chart" }
+                },
+                [
+                  _c(
+                    "svg",
+                    {
+                      staticStyle: { overflow: "hidden", position: "relative" },
+                      attrs: {
+                        height: "300",
+                        version: "1.1",
+                        width: "330",
+                        xmlns: "http://www.w3.org/2000/svg",
+                        "xmlns:xlink": "http://www.w3.org/1999/xlink"
+                      }
+                    },
+                    [
+                      _c(
+                        "desc",
+                        {
+                          staticStyle: {
+                            "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                          }
+                        },
+                        [_vm._v("Created with Raphaël 2.3.0")]
+                      ),
+                      _c("defs", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        }
+                      }),
+                      _c(
+                        "text",
+                        {
+                          staticStyle: {
+                            "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                            "text-anchor": "end",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            "font-weight": "normal"
+                          },
+                          attrs: {
+                            x: "49.546875",
+                            y: "261",
+                            "text-anchor": "end",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            stroke: "none",
+                            fill: "#888888",
+                            "font-weight": "normal"
+                          }
+                        },
+                        [
+                          _c(
+                            "tspan",
+                            {
+                              staticStyle: {
+                                "-webkit-tap-highlight-color":
+                                  "rgba(0, 0, 0, 0)"
+                              },
+                              attrs: { dy: "4" }
+                            },
+                            [_vm._v("0")]
+                          )
+                        ]
+                      ),
+                      _c("path", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          fill: "none",
+                          stroke: "#aaaaaa",
+                          d: "M62.046875,261H305",
+                          "stroke-width": "0.5"
+                        }
+                      }),
+                      _c(
+                        "text",
+                        {
+                          staticStyle: {
+                            "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                            "text-anchor": "end",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            "font-weight": "normal"
+                          },
+                          attrs: {
+                            x: "49.546875",
+                            y: "202",
+                            "text-anchor": "end",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            stroke: "none",
+                            fill: "#888888",
+                            "font-weight": "normal"
+                          }
+                        },
+                        [
+                          _c(
+                            "tspan",
+                            {
+                              staticStyle: {
+                                "-webkit-tap-highlight-color":
+                                  "rgba(0, 0, 0, 0)"
+                              },
+                              attrs: { dy: "4" }
+                            },
+                            [_vm._v("7,500")]
+                          )
+                        ]
+                      ),
+                      _c("path", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          fill: "none",
+                          stroke: "#aaaaaa",
+                          d: "M62.046875,202H305",
+                          "stroke-width": "0.5"
+                        }
+                      }),
+                      _c(
+                        "text",
+                        {
+                          staticStyle: {
+                            "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                            "text-anchor": "end",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            "font-weight": "normal"
+                          },
+                          attrs: {
+                            x: "49.546875",
+                            y: "143",
+                            "text-anchor": "end",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            stroke: "none",
+                            fill: "#888888",
+                            "font-weight": "normal"
+                          }
+                        },
+                        [
+                          _c(
+                            "tspan",
+                            {
+                              staticStyle: {
+                                "-webkit-tap-highlight-color":
+                                  "rgba(0, 0, 0, 0)"
+                              },
+                              attrs: { dy: "4" }
+                            },
+                            [_vm._v("15,000")]
+                          )
+                        ]
+                      ),
+                      _c("path", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          fill: "none",
+                          stroke: "#aaaaaa",
+                          d: "M62.046875,143H305",
+                          "stroke-width": "0.5"
+                        }
+                      }),
+                      _c(
+                        "text",
+                        {
+                          staticStyle: {
+                            "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                            "text-anchor": "end",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            "font-weight": "normal"
+                          },
+                          attrs: {
+                            x: "49.546875",
+                            y: "84.00000000000003",
+                            "text-anchor": "end",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            stroke: "none",
+                            fill: "#888888",
+                            "font-weight": "normal"
+                          }
+                        },
+                        [
+                          _c(
+                            "tspan",
+                            {
+                              staticStyle: {
+                                "-webkit-tap-highlight-color":
+                                  "rgba(0, 0, 0, 0)"
+                              },
+                              attrs: { dy: "4.000000000000028" }
+                            },
+                            [_vm._v("22,500")]
+                          )
+                        ]
+                      ),
+                      _c("path", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          fill: "none",
+                          stroke: "#aaaaaa",
+                          d: "M62.046875,84.00000000000003H305",
+                          "stroke-width": "0.5"
+                        }
+                      }),
+                      _c(
+                        "text",
+                        {
+                          staticStyle: {
+                            "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                            "text-anchor": "end",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            "font-weight": "normal"
+                          },
+                          attrs: {
+                            x: "49.546875",
+                            y: "25.00000000000003",
+                            "text-anchor": "end",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            stroke: "none",
+                            fill: "#888888",
+                            "font-weight": "normal"
+                          }
+                        },
+                        [
+                          _c(
+                            "tspan",
+                            {
+                              staticStyle: {
+                                "-webkit-tap-highlight-color":
+                                  "rgba(0, 0, 0, 0)"
+                              },
+                              attrs: { dy: "4.000000000000028" }
+                            },
+                            [_vm._v("30,000")]
+                          )
+                        ]
+                      ),
+                      _c("path", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          fill: "none",
+                          stroke: "#aaaaaa",
+                          d: "M62.046875,25.00000000000003H305",
+                          "stroke-width": "0.5"
+                        }
+                      }),
+                      _c(
+                        "text",
+                        {
+                          staticStyle: {
+                            "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                            "text-anchor": "middle",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            "font-weight": "normal"
+                          },
+                          attrs: {
+                            x: "260.43419716090324",
+                            y: "273.5",
+                            "text-anchor": "middle",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            stroke: "none",
+                            fill: "#888888",
+                            "font-weight": "normal",
+                            transform: "matrix(1,0,0,1,0,7)"
+                          }
+                        },
+                        [
+                          _c(
+                            "tspan",
+                            {
+                              staticStyle: {
+                                "-webkit-tap-highlight-color":
+                                  "rgba(0, 0, 0, 0)"
+                              },
+                              attrs: { dy: "4" }
+                            },
+                            [_vm._v("2013")]
+                          )
+                        ]
+                      ),
+                      _c(
+                        "text",
+                        {
+                          staticStyle: {
+                            "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                            "text-anchor": "middle",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            "font-weight": "normal"
+                          },
+                          attrs: {
+                            x: "152.38395919826843",
+                            y: "273.5",
+                            "text-anchor": "middle",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            stroke: "none",
+                            fill: "#888888",
+                            "font-weight": "normal",
+                            transform: "matrix(1,0,0,1,0,7)"
+                          }
+                        },
+                        [
+                          _c(
+                            "tspan",
+                            {
+                              staticStyle: {
+                                "-webkit-tap-highlight-color":
+                                  "rgba(0, 0, 0, 0)"
+                              },
+                              attrs: { dy: "4" }
+                            },
+                            [_vm._v("2012")]
+                          )
+                        ]
+                      ),
+                      _c("path", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                          "fill-opacity": "1"
+                        },
+                        attrs: {
+                          fill: "#74a5c2",
+                          stroke: "none",
+                          d:
+                            "M62.046875,219.05493333333334C68.83384207603413,219.56626666666668,82.40777622810236,222.6231049981125,89.1947433041365,221.10026666666667C95.98478558047694,219.57673833144582,109.56487013315781,209.1350666666667,116.35491240949825,206.86946666666668C123.07422507879348,204.6274666666667,136.51285041738393,204.88256480506598,143.23216308667915,203.06986666666666C149.94840055566806,201.2579981383993,163.3808754936459,194.91349669779092,170.0971129626348,192.3712C176.88408003866894,189.80213003112425,190.45801419073717,182.51724094375237,197.2449812667713,182.6244C204.03502354311175,182.73160761041905,217.6151080957926,204.17807818499128,224.40515037213305,193.22866666666667C231.12446304142827,182.3933115183246,244.56308838001874,101.94542370540854,251.28240104931396,95.48533333333336C257.92483371095136,89.09915703874188,271.2096990342261,135.1364875658347,277.8521316958635,141.8436C284.6390987718976,148.69665423250134,298.2130329239659,147.7554,305,149.726L305,261L62.046875,261Z",
+                          "fill-opacity": "1"
+                        }
+                      }),
+                      _c("path", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          fill: "none",
+                          stroke: "#3c8dbc",
+                          d:
+                            "M62.046875,219.05493333333334C68.83384207603413,219.56626666666668,82.40777622810236,222.6231049981125,89.1947433041365,221.10026666666667C95.98478558047694,219.57673833144582,109.56487013315781,209.1350666666667,116.35491240949825,206.86946666666668C123.07422507879348,204.6274666666667,136.51285041738393,204.88256480506598,143.23216308667915,203.06986666666666C149.94840055566806,201.2579981383993,163.3808754936459,194.91349669779092,170.0971129626348,192.3712C176.88408003866894,189.80213003112425,190.45801419073717,182.51724094375237,197.2449812667713,182.6244C204.03502354311175,182.73160761041905,217.6151080957926,204.17807818499128,224.40515037213305,193.22866666666667C231.12446304142827,182.3933115183246,244.56308838001874,101.94542370540854,251.28240104931396,95.48533333333336C257.92483371095136,89.09915703874188,271.2096990342261,135.1364875658347,277.8521316958635,141.8436C284.6390987718976,148.69665423250134,298.2130329239659,147.7554,305,149.726",
+                          "stroke-width": "3"
+                        }
+                      }),
+                      _c("circle", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          cx: "62.046875",
+                          cy: "219.05493333333334",
+                          r: "4",
+                          fill: "#3c8dbc",
+                          stroke: "#ffffff",
+                          "stroke-width": "1"
+                        }
+                      }),
+                      _c("circle", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          cx: "89.1947433041365",
+                          cy: "221.10026666666667",
+                          r: "4",
+                          fill: "#3c8dbc",
+                          stroke: "#ffffff",
+                          "stroke-width": "1"
+                        }
+                      }),
+                      _c("circle", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          cx: "116.35491240949825",
+                          cy: "206.86946666666668",
+                          r: "4",
+                          fill: "#3c8dbc",
+                          stroke: "#ffffff",
+                          "stroke-width": "1"
+                        }
+                      }),
+                      _c("circle", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          cx: "143.23216308667915",
+                          cy: "203.06986666666666",
+                          r: "4",
+                          fill: "#3c8dbc",
+                          stroke: "#ffffff",
+                          "stroke-width": "1"
+                        }
+                      }),
+                      _c("circle", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          cx: "170.0971129626348",
+                          cy: "192.3712",
+                          r: "4",
+                          fill: "#3c8dbc",
+                          stroke: "#ffffff",
+                          "stroke-width": "1"
+                        }
+                      }),
+                      _c("circle", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          cx: "197.2449812667713",
+                          cy: "182.6244",
+                          r: "4",
+                          fill: "#3c8dbc",
+                          stroke: "#ffffff",
+                          "stroke-width": "1"
+                        }
+                      }),
+                      _c("circle", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          cx: "224.40515037213305",
+                          cy: "193.22866666666667",
+                          r: "4",
+                          fill: "#3c8dbc",
+                          stroke: "#ffffff",
+                          "stroke-width": "1"
+                        }
+                      }),
+                      _c("circle", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          cx: "251.28240104931396",
+                          cy: "95.48533333333336",
+                          r: "4",
+                          fill: "#3c8dbc",
+                          stroke: "#ffffff",
+                          "stroke-width": "1"
+                        }
+                      }),
+                      _c("circle", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          cx: "277.8521316958635",
+                          cy: "141.8436",
+                          r: "4",
+                          fill: "#3c8dbc",
+                          stroke: "#ffffff",
+                          "stroke-width": "1"
+                        }
+                      }),
+                      _c("circle", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          cx: "305",
+                          cy: "149.726",
+                          r: "4",
+                          fill: "#3c8dbc",
+                          stroke: "#ffffff",
+                          "stroke-width": "1"
+                        }
+                      }),
+                      _c("path", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                          "fill-opacity": "1"
+                        },
+                        attrs: {
+                          fill: "#eaf3f6",
+                          stroke: "none",
+                          d:
+                            "M62.046875,240.02746666666667C68.83384207603413,239.8072,82.40777622810236,241.35446642506605,89.1947433041365,239.1464C95.98478558047694,236.93733309173274,109.56487013315781,223.3365417102967,116.35491240949825,222.35893333333334C123.07422507879348,221.39150837696334,136.51285041738393,233.23306051728085,143.23216308667915,231.36626666666666C149.94840055566806,229.5003271839475,163.3808754936459,209.28948157595082,170.0971129626348,207.428C176.88408003866894,205.54691490928414,190.45801419073717,214.43960989052474,197.2449812667713,216.39600000000002C204.03502354311175,218.3532765571914,217.6151080957926,232.37735986038396,224.40515037213305,223.08266666666668C231.12446304142827,213.8847931937173,244.56308838001874,148.22814457230535,251.28240104931396,142.42573333333334C257.92483371095136,136.68971123897202,271.2096990342261,170.46889944279067,277.8521316958635,176.92893333333336C284.6390987718976,183.529532776124,298.2130329239659,190.23343333333335,305,194.66826666666668L305,261L62.046875,261Z",
+                          "fill-opacity": "1"
+                        }
+                      }),
+                      _c("path", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          fill: "none",
+                          stroke: "#a0d0e0",
+                          d:
+                            "M62.046875,240.02746666666667C68.83384207603413,239.8072,82.40777622810236,241.35446642506605,89.1947433041365,239.1464C95.98478558047694,236.93733309173274,109.56487013315781,223.3365417102967,116.35491240949825,222.35893333333334C123.07422507879348,221.39150837696334,136.51285041738393,233.23306051728085,143.23216308667915,231.36626666666666C149.94840055566806,229.5003271839475,163.3808754936459,209.28948157595082,170.0971129626348,207.428C176.88408003866894,205.54691490928414,190.45801419073717,214.43960989052474,197.2449812667713,216.39600000000002C204.03502354311175,218.3532765571914,217.6151080957926,232.37735986038396,224.40515037213305,223.08266666666668C231.12446304142827,213.8847931937173,244.56308838001874,148.22814457230535,251.28240104931396,142.42573333333334C257.92483371095136,136.68971123897202,271.2096990342261,170.46889944279067,277.8521316958635,176.92893333333336C284.6390987718976,183.529532776124,298.2130329239659,190.23343333333335,305,194.66826666666668",
+                          "stroke-width": "3"
+                        }
+                      }),
+                      _c("circle", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          cx: "62.046875",
+                          cy: "240.02746666666667",
+                          r: "4",
+                          fill: "#a0d0e0",
+                          stroke: "#ffffff",
+                          "stroke-width": "1"
+                        }
+                      }),
+                      _c("circle", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          cx: "89.1947433041365",
+                          cy: "239.1464",
+                          r: "4",
+                          fill: "#a0d0e0",
+                          stroke: "#ffffff",
+                          "stroke-width": "1"
+                        }
+                      }),
+                      _c("circle", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          cx: "116.35491240949825",
+                          cy: "222.35893333333334",
+                          r: "4",
+                          fill: "#a0d0e0",
+                          stroke: "#ffffff",
+                          "stroke-width": "1"
+                        }
+                      }),
+                      _c("circle", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          cx: "143.23216308667915",
+                          cy: "231.36626666666666",
+                          r: "4",
+                          fill: "#a0d0e0",
+                          stroke: "#ffffff",
+                          "stroke-width": "1"
+                        }
+                      }),
+                      _c("circle", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          cx: "170.0971129626348",
+                          cy: "207.428",
+                          r: "4",
+                          fill: "#a0d0e0",
+                          stroke: "#ffffff",
+                          "stroke-width": "1"
+                        }
+                      }),
+                      _c("circle", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          cx: "197.2449812667713",
+                          cy: "216.39600000000002",
+                          r: "4",
+                          fill: "#a0d0e0",
+                          stroke: "#ffffff",
+                          "stroke-width": "1"
+                        }
+                      }),
+                      _c("circle", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          cx: "224.40515037213305",
+                          cy: "223.08266666666668",
+                          r: "4",
+                          fill: "#a0d0e0",
+                          stroke: "#ffffff",
+                          "stroke-width": "1"
+                        }
+                      }),
+                      _c("circle", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          cx: "251.28240104931396",
+                          cy: "142.42573333333334",
+                          r: "4",
+                          fill: "#a0d0e0",
+                          stroke: "#ffffff",
+                          "stroke-width": "1"
+                        }
+                      }),
+                      _c("circle", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          cx: "277.8521316958635",
+                          cy: "176.92893333333336",
+                          r: "4",
+                          fill: "#a0d0e0",
+                          stroke: "#ffffff",
+                          "stroke-width": "1"
+                        }
+                      }),
+                      _c("circle", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          cx: "305",
+                          cy: "194.66826666666668",
+                          r: "4",
+                          fill: "#a0d0e0",
+                          stroke: "#ffffff",
+                          "stroke-width": "1"
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._m(1)
+                ]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "box box-danger" }, [
+            _vm._m(2),
+            _vm._v(" "),
+            _c("div", { staticClass: "box-body chart-responsive" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "chart",
+                  staticStyle: { height: "300px", position: "relative" },
+                  attrs: { id: "sales-chart" }
+                },
+                [
+                  _c(
+                    "svg",
+                    {
+                      staticStyle: { overflow: "hidden", position: "relative" },
+                      attrs: {
+                        height: "300",
+                        version: "1.1",
+                        width: "330",
+                        xmlns: "http://www.w3.org/2000/svg",
+                        "xmlns:xlink": "http://www.w3.org/1999/xlink"
+                      }
+                    },
+                    [
+                      _c(
+                        "desc",
+                        {
+                          staticStyle: {
+                            "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                          }
+                        },
+                        [_vm._v("Created with Raphaël 2.3.0")]
+                      ),
+                      _c("defs", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        }
+                      }),
+                      _c("path", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                          opacity: "0"
+                        },
+                        attrs: {
+                          fill: "none",
+                          stroke: "#3c8dbc",
+                          d:
+                            "M165,243.33333333333331A93.33333333333333,93.33333333333333,0,0,0,253.22775519497708,180.44625304313007",
+                          "stroke-width": "2",
+                          opacity: "0"
+                        }
+                      }),
+                      _c("path", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          fill: "#3c8dbc",
+                          stroke: "#ffffff",
+                          d:
+                            "M165,246.33333333333331A96.33333333333333,96.33333333333333,0,0,0,256.06364732624417,181.4248826052307L292.6151459070204,194.03833029452744A135,135,0,0,1,165,285Z",
+                          "stroke-width": "3"
+                        }
+                      }),
+                      _c("path", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                          opacity: "0"
+                        },
+                        attrs: {
+                          fill: "none",
+                          stroke: "#f56954",
+                          d:
+                            "M253.22775519497708,180.44625304313007A93.33333333333333,93.33333333333333,0,0,0,81.28484627831412,108.73398312817662",
+                          "stroke-width": "2",
+                          opacity: "0"
+                        }
+                      }),
+                      _c("path", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          fill: "#f56954",
+                          stroke: "#ffffff",
+                          d:
+                            "M256.06364732624417,181.4248826052307A96.33333333333333,96.33333333333333,0,0,0,78.59400205154564,107.40757544301087L43.912009795418626,90.31165416754118A135,135,0,0,1,292.6151459070204,194.03833029452744Z",
+                          "stroke-width": "3"
+                        }
+                      }),
+                      _c("path", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                          opacity: "1"
+                        },
+                        attrs: {
+                          fill: "none",
+                          stroke: "#00a65a",
+                          d:
+                            "M81.28484627831412,108.73398312817662A93.33333333333333,93.33333333333333,0,0,0,164.97067846904883,243.333328727518",
+                          "stroke-width": "2",
+                          opacity: "1"
+                        }
+                      }),
+                      _c("path", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          fill: "#00a65a",
+                          stroke: "#ffffff",
+                          d:
+                            "M78.59400205154564,107.40757544301087A96.33333333333333,96.33333333333333,0,0,0,164.96973599126827,246.3333285794739L164.95601770357325,289.999993091277A140,140,0,0,1,39.427269417471166,88.10097469226493Z",
+                          "stroke-width": "3"
+                        }
+                      }),
+                      _c(
+                        "text",
+                        {
+                          staticStyle: {
+                            "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                            "text-anchor": "middle",
+                            "font-family": "Arial",
+                            "font-size": "15px",
+                            "font-weight": "800"
+                          },
+                          attrs: {
+                            x: "165",
+                            y: "140",
+                            "text-anchor": "middle",
+                            "font-family": '"Arial"',
+                            "font-size": "15px",
+                            stroke: "none",
+                            fill: "#000000",
+                            "font-weight": "800",
+                            transform:
+                              "matrix(1.241,0,0,1.241,-39.7645,-36.3906)",
+                            "stroke-width": "0.8058035714285715"
+                          }
+                        },
+                        [
+                          _c(
+                            "tspan",
+                            {
+                              staticStyle: {
+                                "-webkit-tap-highlight-color":
+                                  "rgba(0, 0, 0, 0)"
+                              },
+                              attrs: { dy: "6" }
+                            },
+                            [_vm._v("Mail-Order Sales")]
+                          )
+                        ]
+                      ),
+                      _c(
+                        "text",
+                        {
+                          staticStyle: {
+                            "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                            "text-anchor": "middle",
+                            "font-family": "Arial",
+                            "font-size": "14px"
+                          },
+                          attrs: {
+                            x: "165",
+                            y: "160",
+                            "text-anchor": "middle",
+                            "font-family": '"Arial"',
+                            "font-size": "14px",
+                            stroke: "none",
+                            fill: "#000000",
+                            transform:
+                              "matrix(1.9444,0,0,1.9444,-155.9293,-143.5556)",
+                            "stroke-width": "0.5142857142857143"
+                          }
+                        },
+                        [
+                          _c(
+                            "tspan",
+                            {
+                              staticStyle: {
+                                "-webkit-tap-highlight-color":
+                                  "rgba(0, 0, 0, 0)"
+                              },
+                              attrs: { dy: "5" }
+                            },
+                            [_vm._v("20")]
+                          )
+                        ]
+                      )
+                    ]
+                  )
+                ]
+              )
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("div", { staticClass: "box box-info" }, [
+            _vm._m(3),
+            _vm._v(" "),
+            _c("div", { staticClass: "box-body chart-responsive" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "chart",
+                  staticStyle: {
+                    height: "300px",
+                    "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                  },
+                  attrs: { id: "line-chart" }
+                },
+                [
+                  _c(
+                    "svg",
+                    {
+                      staticStyle: {
+                        overflow: "hidden",
+                        position: "relative",
+                        left: "-0.5px"
+                      },
+                      attrs: {
+                        height: "300",
+                        version: "1.1",
+                        width: "330",
+                        xmlns: "http://www.w3.org/2000/svg",
+                        "xmlns:xlink": "http://www.w3.org/1999/xlink"
+                      }
+                    },
+                    [
+                      _c(
+                        "desc",
+                        {
+                          staticStyle: {
+                            "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                          }
+                        },
+                        [_vm._v("Created with Raphaël 2.3.0")]
+                      ),
+                      _c("defs", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        }
+                      }),
+                      _c(
+                        "text",
+                        {
+                          staticStyle: {
+                            "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                            "text-anchor": "end",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            "font-weight": "normal"
+                          },
+                          attrs: {
+                            x: "49.546875",
+                            y: "261",
+                            "text-anchor": "end",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            stroke: "none",
+                            fill: "#888888",
+                            "font-weight": "normal"
+                          }
+                        },
+                        [
+                          _c(
+                            "tspan",
+                            {
+                              staticStyle: {
+                                "-webkit-tap-highlight-color":
+                                  "rgba(0, 0, 0, 0)"
+                              },
+                              attrs: { dy: "4" }
+                            },
+                            [_vm._v("0")]
+                          )
+                        ]
+                      ),
+                      _c("path", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          fill: "none",
+                          stroke: "#aaaaaa",
+                          d: "M62.046875,261H305",
+                          "stroke-width": "0.5"
+                        }
+                      }),
+                      _c(
+                        "text",
+                        {
+                          staticStyle: {
+                            "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                            "text-anchor": "end",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            "font-weight": "normal"
+                          },
+                          attrs: {
+                            x: "49.546875",
+                            y: "202",
+                            "text-anchor": "end",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            stroke: "none",
+                            fill: "#888888",
+                            "font-weight": "normal"
+                          }
+                        },
+                        [
+                          _c(
+                            "tspan",
+                            {
+                              staticStyle: {
+                                "-webkit-tap-highlight-color":
+                                  "rgba(0, 0, 0, 0)"
+                              },
+                              attrs: { dy: "4" }
+                            },
+                            [_vm._v("5,000")]
+                          )
+                        ]
+                      ),
+                      _c("path", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          fill: "none",
+                          stroke: "#aaaaaa",
+                          d: "M62.046875,202H305",
+                          "stroke-width": "0.5"
+                        }
+                      }),
+                      _c(
+                        "text",
+                        {
+                          staticStyle: {
+                            "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                            "text-anchor": "end",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            "font-weight": "normal"
+                          },
+                          attrs: {
+                            x: "49.546875",
+                            y: "143",
+                            "text-anchor": "end",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            stroke: "none",
+                            fill: "#888888",
+                            "font-weight": "normal"
+                          }
+                        },
+                        [
+                          _c(
+                            "tspan",
+                            {
+                              staticStyle: {
+                                "-webkit-tap-highlight-color":
+                                  "rgba(0, 0, 0, 0)"
+                              },
+                              attrs: { dy: "4" }
+                            },
+                            [_vm._v("10,000")]
+                          )
+                        ]
+                      ),
+                      _c("path", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          fill: "none",
+                          stroke: "#aaaaaa",
+                          d: "M62.046875,143H305",
+                          "stroke-width": "0.5"
+                        }
+                      }),
+                      _c(
+                        "text",
+                        {
+                          staticStyle: {
+                            "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                            "text-anchor": "end",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            "font-weight": "normal"
+                          },
+                          attrs: {
+                            x: "49.546875",
+                            y: "84",
+                            "text-anchor": "end",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            stroke: "none",
+                            fill: "#888888",
+                            "font-weight": "normal"
+                          }
+                        },
+                        [
+                          _c(
+                            "tspan",
+                            {
+                              staticStyle: {
+                                "-webkit-tap-highlight-color":
+                                  "rgba(0, 0, 0, 0)"
+                              },
+                              attrs: { dy: "4" }
+                            },
+                            [_vm._v("15,000")]
+                          )
+                        ]
+                      ),
+                      _c("path", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          fill: "none",
+                          stroke: "#aaaaaa",
+                          d: "M62.046875,84H305",
+                          "stroke-width": "0.5"
+                        }
+                      }),
+                      _c(
+                        "text",
+                        {
+                          staticStyle: {
+                            "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                            "text-anchor": "end",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            "font-weight": "normal"
+                          },
+                          attrs: {
+                            x: "49.546875",
+                            y: "25",
+                            "text-anchor": "end",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            stroke: "none",
+                            fill: "#888888",
+                            "font-weight": "normal"
+                          }
+                        },
+                        [
+                          _c(
+                            "tspan",
+                            {
+                              staticStyle: {
+                                "-webkit-tap-highlight-color":
+                                  "rgba(0, 0, 0, 0)"
+                              },
+                              attrs: { dy: "4" }
+                            },
+                            [_vm._v("20,000")]
+                          )
+                        ]
+                      ),
+                      _c("path", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          fill: "none",
+                          stroke: "#aaaaaa",
+                          d: "M62.046875,25H305",
+                          "stroke-width": "0.5"
+                        }
+                      }),
+                      _c(
+                        "text",
+                        {
+                          staticStyle: {
+                            "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                            "text-anchor": "middle",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            "font-weight": "normal"
+                          },
+                          attrs: {
+                            x: "260.43419716090324",
+                            y: "273.5",
+                            "text-anchor": "middle",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            stroke: "none",
+                            fill: "#888888",
+                            "font-weight": "normal",
+                            transform: "matrix(1,0,0,1,0,7)"
+                          }
+                        },
+                        [
+                          _c(
+                            "tspan",
+                            {
+                              staticStyle: {
+                                "-webkit-tap-highlight-color":
+                                  "rgba(0, 0, 0, 0)"
+                              },
+                              attrs: { dy: "4" }
+                            },
+                            [_vm._v("2013")]
+                          )
+                        ]
+                      ),
+                      _c(
+                        "text",
+                        {
+                          staticStyle: {
+                            "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                            "text-anchor": "middle",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            "font-weight": "normal"
+                          },
+                          attrs: {
+                            x: "152.38395919826843",
+                            y: "273.5",
+                            "text-anchor": "middle",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            stroke: "none",
+                            fill: "#888888",
+                            "font-weight": "normal",
+                            transform: "matrix(1,0,0,1,0,7)"
+                          }
+                        },
+                        [
+                          _c(
+                            "tspan",
+                            {
+                              staticStyle: {
+                                "-webkit-tap-highlight-color":
+                                  "rgba(0, 0, 0, 0)"
+                              },
+                              attrs: { dy: "4" }
+                            },
+                            [_vm._v("2012")]
+                          )
+                        ]
+                      ),
+                      _c("path", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          fill: "none",
+                          stroke: "#3c8dbc",
+                          d:
+                            "M62.046875,229.5412C68.83384207603413,229.2108,82.40777622810236,231.5316996375991,89.1947433041365,228.2196C95.98478558047694,224.9059996375991,109.56487013315781,204.50481256544504,116.35491240949825,203.0384C123.07422507879348,201.58726256544503,136.51285041738393,219.34959077592126,143.23216308667915,216.5494C149.94840055566806,213.75049077592126,163.3808754936459,183.4342223639262,170.0971129626348,180.642C176.88408003866894,177.8203723639262,190.45801419073717,191.1594148357871,197.2449812667713,194.094C204.03502354311175,197.02991483578708,217.6151080957926,218.0660397905759,224.40515037213305,204.124C231.12446304142827,190.32718979057591,244.56308838001874,91.842216858458,251.28240104931396,83.1386C257.92483371095136,74.53456685845799,271.2096990342261,125.20334916418594,277.8521316958635,134.89339999999999C284.6390987718976,144.79429916418593,298.2130329239659,154.85015,305,161.50240000000002",
+                          "stroke-width": "3"
+                        }
+                      }),
+                      _c("circle", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          cx: "62.046875",
+                          cy: "229.5412",
+                          r: "4",
+                          fill: "#3c8dbc",
+                          stroke: "#ffffff",
+                          "stroke-width": "1"
+                        }
+                      }),
+                      _c("circle", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          cx: "89.1947433041365",
+                          cy: "228.2196",
+                          r: "4",
+                          fill: "#3c8dbc",
+                          stroke: "#ffffff",
+                          "stroke-width": "1"
+                        }
+                      }),
+                      _c("circle", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          cx: "116.35491240949825",
+                          cy: "203.0384",
+                          r: "4",
+                          fill: "#3c8dbc",
+                          stroke: "#ffffff",
+                          "stroke-width": "1"
+                        }
+                      }),
+                      _c("circle", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          cx: "143.23216308667915",
+                          cy: "216.5494",
+                          r: "4",
+                          fill: "#3c8dbc",
+                          stroke: "#ffffff",
+                          "stroke-width": "1"
+                        }
+                      }),
+                      _c("circle", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          cx: "170.0971129626348",
+                          cy: "180.642",
+                          r: "4",
+                          fill: "#3c8dbc",
+                          stroke: "#ffffff",
+                          "stroke-width": "1"
+                        }
+                      }),
+                      _c("circle", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          cx: "197.2449812667713",
+                          cy: "194.094",
+                          r: "4",
+                          fill: "#3c8dbc",
+                          stroke: "#ffffff",
+                          "stroke-width": "1"
+                        }
+                      }),
+                      _c("circle", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          cx: "224.40515037213305",
+                          cy: "204.124",
+                          r: "4",
+                          fill: "#3c8dbc",
+                          stroke: "#ffffff",
+                          "stroke-width": "1"
+                        }
+                      }),
+                      _c("circle", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          cx: "251.28240104931396",
+                          cy: "83.1386",
+                          r: "4",
+                          fill: "#3c8dbc",
+                          stroke: "#ffffff",
+                          "stroke-width": "1"
+                        }
+                      }),
+                      _c("circle", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          cx: "277.8521316958635",
+                          cy: "134.89339999999999",
+                          r: "4",
+                          fill: "#3c8dbc",
+                          stroke: "#ffffff",
+                          "stroke-width": "1"
+                        }
+                      }),
+                      _c("circle", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          cx: "305",
+                          cy: "161.50240000000002",
+                          r: "4",
+                          fill: "#3c8dbc",
+                          stroke: "#ffffff",
+                          "stroke-width": "1"
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._m(4)
+                ]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "box box-success" }, [
+            _vm._m(5),
+            _vm._v(" "),
+            _c("div", { staticClass: "box-body chart-responsive" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "chart",
+                  staticStyle: {
+                    height: "300px",
+                    "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                  },
+                  attrs: { id: "bar-chart" }
+                },
+                [
+                  _c(
+                    "svg",
+                    {
+                      staticStyle: {
+                        overflow: "hidden",
+                        position: "relative",
+                        left: "-0.5px"
+                      },
+                      attrs: {
+                        height: "300",
+                        version: "1.1",
+                        width: "330",
+                        xmlns: "http://www.w3.org/2000/svg",
+                        "xmlns:xlink": "http://www.w3.org/1999/xlink"
+                      }
+                    },
+                    [
+                      _c(
+                        "desc",
+                        {
+                          staticStyle: {
+                            "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                          }
+                        },
+                        [_vm._v("Created with Raphaël 2.3.0")]
+                      ),
+                      _c("defs", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        }
+                      }),
+                      _c(
+                        "text",
+                        {
+                          staticStyle: {
+                            "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                            "text-anchor": "end",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            "font-weight": "normal"
+                          },
+                          attrs: {
+                            x: "32.859375",
+                            y: "261",
+                            "text-anchor": "end",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            stroke: "none",
+                            fill: "#888888",
+                            "font-weight": "normal"
+                          }
+                        },
+                        [
+                          _c(
+                            "tspan",
+                            {
+                              staticStyle: {
+                                "-webkit-tap-highlight-color":
+                                  "rgba(0, 0, 0, 0)"
+                              },
+                              attrs: { dy: "4" }
+                            },
+                            [_vm._v("0")]
+                          )
+                        ]
+                      ),
+                      _c("path", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          fill: "none",
+                          stroke: "#aaaaaa",
+                          d: "M45.359375,261H305",
+                          "stroke-width": "0.5"
+                        }
+                      }),
+                      _c(
+                        "text",
+                        {
+                          staticStyle: {
+                            "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                            "text-anchor": "end",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            "font-weight": "normal"
+                          },
+                          attrs: {
+                            x: "32.859375",
+                            y: "202",
+                            "text-anchor": "end",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            stroke: "none",
+                            fill: "#888888",
+                            "font-weight": "normal"
+                          }
+                        },
+                        [
+                          _c(
+                            "tspan",
+                            {
+                              staticStyle: {
+                                "-webkit-tap-highlight-color":
+                                  "rgba(0, 0, 0, 0)"
+                              },
+                              attrs: { dy: "4" }
+                            },
+                            [_vm._v("25")]
+                          )
+                        ]
+                      ),
+                      _c("path", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          fill: "none",
+                          stroke: "#aaaaaa",
+                          d: "M45.359375,202H305",
+                          "stroke-width": "0.5"
+                        }
+                      }),
+                      _c(
+                        "text",
+                        {
+                          staticStyle: {
+                            "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                            "text-anchor": "end",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            "font-weight": "normal"
+                          },
+                          attrs: {
+                            x: "32.859375",
+                            y: "143",
+                            "text-anchor": "end",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            stroke: "none",
+                            fill: "#888888",
+                            "font-weight": "normal"
+                          }
+                        },
+                        [
+                          _c(
+                            "tspan",
+                            {
+                              staticStyle: {
+                                "-webkit-tap-highlight-color":
+                                  "rgba(0, 0, 0, 0)"
+                              },
+                              attrs: { dy: "4" }
+                            },
+                            [_vm._v("50")]
+                          )
+                        ]
+                      ),
+                      _c("path", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          fill: "none",
+                          stroke: "#aaaaaa",
+                          d: "M45.359375,143H305",
+                          "stroke-width": "0.5"
+                        }
+                      }),
+                      _c(
+                        "text",
+                        {
+                          staticStyle: {
+                            "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                            "text-anchor": "end",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            "font-weight": "normal"
+                          },
+                          attrs: {
+                            x: "32.859375",
+                            y: "84",
+                            "text-anchor": "end",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            stroke: "none",
+                            fill: "#888888",
+                            "font-weight": "normal"
+                          }
+                        },
+                        [
+                          _c(
+                            "tspan",
+                            {
+                              staticStyle: {
+                                "-webkit-tap-highlight-color":
+                                  "rgba(0, 0, 0, 0)"
+                              },
+                              attrs: { dy: "4" }
+                            },
+                            [_vm._v("75")]
+                          )
+                        ]
+                      ),
+                      _c("path", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          fill: "none",
+                          stroke: "#aaaaaa",
+                          d: "M45.359375,84H305",
+                          "stroke-width": "0.5"
+                        }
+                      }),
+                      _c(
+                        "text",
+                        {
+                          staticStyle: {
+                            "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                            "text-anchor": "end",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            "font-weight": "normal"
+                          },
+                          attrs: {
+                            x: "32.859375",
+                            y: "25",
+                            "text-anchor": "end",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            stroke: "none",
+                            fill: "#888888",
+                            "font-weight": "normal"
+                          }
+                        },
+                        [
+                          _c(
+                            "tspan",
+                            {
+                              staticStyle: {
+                                "-webkit-tap-highlight-color":
+                                  "rgba(0, 0, 0, 0)"
+                              },
+                              attrs: { dy: "4" }
+                            },
+                            [_vm._v("100")]
+                          )
+                        ]
+                      ),
+                      _c("path", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)"
+                        },
+                        attrs: {
+                          fill: "none",
+                          stroke: "#aaaaaa",
+                          d: "M45.359375,25H305",
+                          "stroke-width": "0.5"
+                        }
+                      }),
+                      _c(
+                        "text",
+                        {
+                          staticStyle: {
+                            "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                            "text-anchor": "middle",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            "font-weight": "normal"
+                          },
+                          attrs: {
+                            x: "286.45424107142856",
+                            y: "273.5",
+                            "text-anchor": "middle",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            stroke: "none",
+                            fill: "#888888",
+                            "font-weight": "normal",
+                            transform: "matrix(1,0,0,1,0,7)"
+                          }
+                        },
+                        [
+                          _c(
+                            "tspan",
+                            {
+                              staticStyle: {
+                                "-webkit-tap-highlight-color":
+                                  "rgba(0, 0, 0, 0)"
+                              },
+                              attrs: { dy: "4" }
+                            },
+                            [_vm._v("2012")]
+                          )
+                        ]
+                      ),
+                      _c(
+                        "text",
+                        {
+                          staticStyle: {
+                            "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                            "text-anchor": "middle",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            "font-weight": "normal"
+                          },
+                          attrs: {
+                            x: "175.1796875",
+                            y: "273.5",
+                            "text-anchor": "middle",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            stroke: "none",
+                            fill: "#888888",
+                            "font-weight": "normal",
+                            transform: "matrix(1,0,0,1,0,7)"
+                          }
+                        },
+                        [
+                          _c(
+                            "tspan",
+                            {
+                              staticStyle: {
+                                "-webkit-tap-highlight-color":
+                                  "rgba(0, 0, 0, 0)"
+                              },
+                              attrs: { dy: "4" }
+                            },
+                            [_vm._v("2009")]
+                          )
+                        ]
+                      ),
+                      _c(
+                        "text",
+                        {
+                          staticStyle: {
+                            "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                            "text-anchor": "middle",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            "font-weight": "normal"
+                          },
+                          attrs: {
+                            x: "63.90513392857143",
+                            y: "273.5",
+                            "text-anchor": "middle",
+                            "font-family": "sans-serif",
+                            "font-size": "12px",
+                            stroke: "none",
+                            fill: "#888888",
+                            "font-weight": "normal",
+                            transform: "matrix(1,0,0,1,0,7)"
+                          }
+                        },
+                        [
+                          _c(
+                            "tspan",
+                            {
+                              staticStyle: {
+                                "-webkit-tap-highlight-color":
+                                  "rgba(0, 0, 0, 0)"
+                              },
+                              attrs: { dy: "4" }
+                            },
+                            [_vm._v("2006")]
+                          )
+                        ]
+                      ),
+                      _c("rect", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                          "fill-opacity": "1"
+                        },
+                        attrs: {
+                          x: "49.99581473214286",
+                          y: "25",
+                          width: "12.40931919642857",
+                          height: "236",
+                          rx: "0",
+                          ry: "0",
+                          fill: "#00a65a",
+                          stroke: "none",
+                          "fill-opacity": "1"
+                        }
+                      }),
+                      _c("rect", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                          "fill-opacity": "1"
+                        },
+                        attrs: {
+                          x: "65.40513392857143",
+                          y: "48.60000000000002",
+                          width: "12.40931919642857",
+                          height: "212.39999999999998",
+                          rx: "0",
+                          ry: "0",
+                          fill: "#f56954",
+                          stroke: "none",
+                          "fill-opacity": "1"
+                        }
+                      }),
+                      _c("rect", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                          "fill-opacity": "1"
+                        },
+                        attrs: {
+                          x: "87.08733258928572",
+                          y: "84",
+                          width: "12.40931919642857",
+                          height: "177",
+                          rx: "0",
+                          ry: "0",
+                          fill: "#00a65a",
+                          stroke: "none",
+                          "fill-opacity": "1"
+                        }
+                      }),
+                      _c("rect", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                          "fill-opacity": "1"
+                        },
+                        attrs: {
+                          x: "102.49665178571429",
+                          y: "107.6",
+                          width: "12.40931919642857",
+                          height: "153.4",
+                          rx: "0",
+                          ry: "0",
+                          fill: "#f56954",
+                          stroke: "none",
+                          "fill-opacity": "1"
+                        }
+                      }),
+                      _c("rect", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                          "fill-opacity": "1"
+                        },
+                        attrs: {
+                          x: "124.17885044642857",
+                          y: "143",
+                          width: "12.40931919642857",
+                          height: "118",
+                          rx: "0",
+                          ry: "0",
+                          fill: "#00a65a",
+                          stroke: "none",
+                          "fill-opacity": "1"
+                        }
+                      }),
+                      _c("rect", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                          "fill-opacity": "1"
+                        },
+                        attrs: {
+                          x: "139.58816964285714",
+                          y: "166.60000000000002",
+                          width: "12.40931919642857",
+                          height: "94.39999999999998",
+                          rx: "0",
+                          ry: "0",
+                          fill: "#f56954",
+                          stroke: "none",
+                          "fill-opacity": "1"
+                        }
+                      }),
+                      _c("rect", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                          "fill-opacity": "1"
+                        },
+                        attrs: {
+                          x: "161.27036830357142",
+                          y: "84",
+                          width: "12.40931919642857",
+                          height: "177",
+                          rx: "0",
+                          ry: "0",
+                          fill: "#00a65a",
+                          stroke: "none",
+                          "fill-opacity": "1"
+                        }
+                      }),
+                      _c("rect", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                          "fill-opacity": "1"
+                        },
+                        attrs: {
+                          x: "176.6796875",
+                          y: "107.6",
+                          width: "12.40931919642857",
+                          height: "153.4",
+                          rx: "0",
+                          ry: "0",
+                          fill: "#f56954",
+                          stroke: "none",
+                          "fill-opacity": "1"
+                        }
+                      }),
+                      _c("rect", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                          "fill-opacity": "1"
+                        },
+                        attrs: {
+                          x: "198.36188616071428",
+                          y: "143",
+                          width: "12.40931919642857",
+                          height: "118",
+                          rx: "0",
+                          ry: "0",
+                          fill: "#00a65a",
+                          stroke: "none",
+                          "fill-opacity": "1"
+                        }
+                      }),
+                      _c("rect", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                          "fill-opacity": "1"
+                        },
+                        attrs: {
+                          x: "213.77120535714283",
+                          y: "166.60000000000002",
+                          width: "12.40931919642857",
+                          height: "94.39999999999998",
+                          rx: "0",
+                          ry: "0",
+                          fill: "#f56954",
+                          stroke: "none",
+                          "fill-opacity": "1"
+                        }
+                      }),
+                      _c("rect", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                          "fill-opacity": "1"
+                        },
+                        attrs: {
+                          x: "235.45340401785714",
+                          y: "84",
+                          width: "12.40931919642857",
+                          height: "177",
+                          rx: "0",
+                          ry: "0",
+                          fill: "#00a65a",
+                          stroke: "none",
+                          "fill-opacity": "1"
+                        }
+                      }),
+                      _c("rect", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                          "fill-opacity": "1"
+                        },
+                        attrs: {
+                          x: "250.86272321428572",
+                          y: "107.6",
+                          width: "12.40931919642857",
+                          height: "153.4",
+                          rx: "0",
+                          ry: "0",
+                          fill: "#f56954",
+                          stroke: "none",
+                          "fill-opacity": "1"
+                        }
+                      }),
+                      _c("rect", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                          "fill-opacity": "1"
+                        },
+                        attrs: {
+                          x: "272.54492187499994",
+                          y: "25",
+                          width: "12.40931919642857",
+                          height: "236",
+                          rx: "0",
+                          ry: "0",
+                          fill: "#00a65a",
+                          stroke: "none",
+                          "fill-opacity": "1"
+                        }
+                      }),
+                      _c("rect", {
+                        staticStyle: {
+                          "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+                          "fill-opacity": "1"
+                        },
+                        attrs: {
+                          x: "287.9542410714285",
+                          y: "48.60000000000002",
+                          width: "12.40931919642857",
+                          height: "212.39999999999998",
+                          rx: "0",
+                          ry: "0",
+                          fill: "#f56954",
+                          stroke: "none",
+                          "fill-opacity": "1"
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._m(6)
+                ]
+              )
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "box-header with-border" }, [
+      _c("h3", { staticClass: "box-title" }, [_vm._v("Area Chart")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "box-tools pull-right" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-box-tool",
+            attrs: { type: "button", "data-widget": "collapse" }
+          },
+          [_c("i", { staticClass: "fa fa-minus" })]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-box-tool",
+            attrs: { type: "button", "data-widget": "remove" }
+          },
+          [_c("i", { staticClass: "fa fa-times" })]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "morris-hover morris-default-style",
+        staticStyle: { left: "243.953px", top: "109px", display: "none" }
+      },
+      [
+        _c("div", { staticClass: "morris-hover-row-label" }, [
+          _vm._v("2013 Q2")
+        ]),
+        _c(
+          "div",
+          {
+            staticClass: "morris-hover-point",
+            staticStyle: { color: "#a0d0e0" }
+          },
+          [_vm._v("\n  Item 1:\n  8,432\n")]
+        ),
+        _c(
+          "div",
+          {
+            staticClass: "morris-hover-point",
+            staticStyle: { color: "#3c8dbc" }
+          },
+          [_vm._v("\n  Item 2:\n  5,713\n")]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "box-header with-border" }, [
+      _c("h3", { staticClass: "box-title" }, [_vm._v("Donut Chart")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "box-tools pull-right" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-box-tool",
+            attrs: { type: "button", "data-widget": "collapse" }
+          },
+          [_c("i", { staticClass: "fa fa-minus" })]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-box-tool",
+            attrs: { type: "button", "data-widget": "remove" }
+          },
+          [_c("i", { staticClass: "fa fa-times" })]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "box-header with-border" }, [
+      _c("h3", { staticClass: "box-title" }, [_vm._v("Line Chart")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "box-tools pull-right" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-box-tool",
+            attrs: { type: "button", "data-widget": "collapse" }
+          },
+          [_c("i", { staticClass: "fa fa-minus" })]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-box-tool",
+            attrs: { type: "button", "data-widget": "remove" }
+          },
+          [_c("i", { staticClass: "fa fa-times" })]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "morris-hover morris-default-style",
+        staticStyle: { left: "243.953px", top: "94px", display: "none" }
+      },
+      [
+        _c("div", { staticClass: "morris-hover-row-label" }, [
+          _vm._v("2013 Q2")
+        ]),
+        _c(
+          "div",
+          {
+            staticClass: "morris-hover-point",
+            staticStyle: { color: "#3c8dbc" }
+          },
+          [_vm._v("\n  Item 1:\n  8,432\n")]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "box-header with-border" }, [
+      _c("h3", { staticClass: "box-title" }, [_vm._v("Bar Chart")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "box-tools pull-right" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-box-tool",
+            attrs: { type: "button", "data-widget": "collapse" }
+          },
+          [_c("i", { staticClass: "fa fa-minus" })]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-box-tool",
+            attrs: { type: "button", "data-widget": "remove" }
+          },
+          [_c("i", { staticClass: "fa fa-times" })]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "morris-hover morris-default-style",
+        staticStyle: { left: "29.8895px", top: "112px", display: "none" }
+      },
+      [
+        _c("div", { staticClass: "morris-hover-row-label" }, [_vm._v("2006")]),
+        _c(
+          "div",
+          {
+            staticClass: "morris-hover-point",
+            staticStyle: { color: "#00a65a" }
+          },
+          [_vm._v("\n  CPU:\n  100\n")]
+        ),
+        _c(
+          "div",
+          {
+            staticClass: "morris-hover-point",
+            staticStyle: { color: "#f56954" }
+          },
+          [_vm._v("\n  DISK:\n  90\n")]
+        )
+      ]
     )
   }
 ]
@@ -80435,16 +84860,18 @@ module.exports = function(module) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
-/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue_progressbar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-progressbar */ "./node_modules/vue-progressbar/dist/vue-progressbar.js");
-/* harmony import */ var vue_progressbar__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_progressbar__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vform */ "./node_modules/vform/dist/vform.common.js");
-/* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vform__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./routes */ "./resources/js/routes.js");
+/* harmony import */ var vue_js_toggle_button__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-js-toggle-button */ "./node_modules/vue-js-toggle-button/dist/index.js");
+/* harmony import */ var vue_js_toggle_button__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_js_toggle_button__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vue_progressbar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-progressbar */ "./node_modules/vue-progressbar/dist/vue-progressbar.js");
+/* harmony import */ var vue_progressbar__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_progressbar__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vform */ "./node_modules/vform/dist/vform.common.js");
+/* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vform__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./routes */ "./resources/js/routes.js");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -80453,6 +84880,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+
 
 
 
@@ -80469,44 +84897,48 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-// Custom Event
+// Toggle button
+
+Vue.component('ToggleButton', vue_js_toggle_button__WEBPACK_IMPORTED_MODULE_0__["ToggleButton"]); // Custom Event
 
 var Fire = new Vue();
 window.Fire = Fire; // Sweet Alert
 
-window.Swal = sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a;
-var Toast = sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a.mixin({
+window.Swal = sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a;
+var Toast = sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.mixin({
   toast: true,
   position: 'top-end',
   showConfirmButton: false,
   timer: 3000,
   timerProgressBar: true,
   onOpen: function onOpen(toast) {
-    toast.addEventListener('mouseenter', sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a.stopTimer);
-    toast.addEventListener('mouseleave', sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a.resumeTimer);
+    toast.addEventListener('mouseenter', sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.stopTimer);
+    toast.addEventListener('mouseleave', sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.resumeTimer);
   }
 });
 window.Toast = Toast; // ProgressBar
 
-Vue.use(vue_progressbar__WEBPACK_IMPORTED_MODULE_1___default.a, {
+Vue.use(vue_progressbar__WEBPACK_IMPORTED_MODULE_2___default.a, {
   color: 'rgb(143, 255, 199)',
   failedColor: 'red',
   height: '3px'
 }); // Date
 
 Vue.filter('myDate', function (created) {
-  return moment__WEBPACK_IMPORTED_MODULE_2___default()(created).format('L');
+  return moment__WEBPACK_IMPORTED_MODULE_3___default()(created).format('L');
 }); // Form
 
-window.Form = vform__WEBPACK_IMPORTED_MODULE_3__["Form"];
-Vue.component(vform__WEBPACK_IMPORTED_MODULE_3__["HasError"].name, vform__WEBPACK_IMPORTED_MODULE_3__["HasError"]);
-Vue.component(vform__WEBPACK_IMPORTED_MODULE_3__["AlertError"].name, vform__WEBPACK_IMPORTED_MODULE_3__["AlertError"]); // Use packages
+window.Form = vform__WEBPACK_IMPORTED_MODULE_4__["Form"];
+Vue.component(vform__WEBPACK_IMPORTED_MODULE_4__["HasError"].name, vform__WEBPACK_IMPORTED_MODULE_4__["HasError"]);
+Vue.component(vform__WEBPACK_IMPORTED_MODULE_4__["AlertError"].name, vform__WEBPACK_IMPORTED_MODULE_4__["AlertError"]); // Pagination
 
-Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_4__["default"]); // Register routes
+Vue.component('pagination', __webpack_require__(/*! laravel-vue-pagination */ "./node_modules/laravel-vue-pagination/dist/laravel-vue-pagination.common.js")); // Use packages
 
-var router = new vue_router__WEBPACK_IMPORTED_MODULE_4__["default"]({
+Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_5__["default"]); // Register routes
+
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_5__["default"]({
   mode: 'history',
-  routes: _routes__WEBPACK_IMPORTED_MODULE_5__["default"]
+  routes: _routes__WEBPACK_IMPORTED_MODULE_6__["default"]
 });
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -80779,6 +85211,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/LocalList.vue":
+/*!***********************************************!*\
+  !*** ./resources/js/components/LocalList.vue ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _LocalList_vue_vue_type_template_id_283b844e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LocalList.vue?vue&type=template&id=283b844e& */ "./resources/js/components/LocalList.vue?vue&type=template&id=283b844e&");
+/* harmony import */ var _LocalList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LocalList.vue?vue&type=script&lang=js& */ "./resources/js/components/LocalList.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _LocalList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _LocalList_vue_vue_type_template_id_283b844e___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _LocalList_vue_vue_type_template_id_283b844e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/LocalList.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/LocalList.vue?vue&type=script&lang=js&":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/LocalList.vue?vue&type=script&lang=js& ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LocalList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./LocalList.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/LocalList.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LocalList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/LocalList.vue?vue&type=template&id=283b844e&":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/LocalList.vue?vue&type=template&id=283b844e& ***!
+  \******************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LocalList_vue_vue_type_template_id_283b844e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./LocalList.vue?vue&type=template&id=283b844e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/LocalList.vue?vue&type=template&id=283b844e&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LocalList_vue_vue_type_template_id_283b844e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LocalList_vue_vue_type_template_id_283b844e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/Roles.vue":
 /*!*******************************************!*\
   !*** ./resources/js/components/Roles.vue ***!
@@ -80912,6 +85413,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Settlements_vue_vue_type_template_id_6b555b62___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Settlements_vue_vue_type_template_id_6b555b62___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Statistic.vue":
+/*!***********************************************!*\
+  !*** ./resources/js/components/Statistic.vue ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Statistic_vue_vue_type_template_id_1657fb75___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Statistic.vue?vue&type=template&id=1657fb75& */ "./resources/js/components/Statistic.vue?vue&type=template&id=1657fb75&");
+/* harmony import */ var _Statistic_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Statistic.vue?vue&type=script&lang=js& */ "./resources/js/components/Statistic.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Statistic_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Statistic_vue_vue_type_template_id_1657fb75___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Statistic_vue_vue_type_template_id_1657fb75___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Statistic.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Statistic.vue?vue&type=script&lang=js&":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/Statistic.vue?vue&type=script&lang=js& ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Statistic_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Statistic.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Statistic.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Statistic_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Statistic.vue?vue&type=template&id=1657fb75&":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/Statistic.vue?vue&type=template&id=1657fb75& ***!
+  \******************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Statistic_vue_vue_type_template_id_1657fb75___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Statistic.vue?vue&type=template&id=1657fb75& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Statistic.vue?vue&type=template&id=1657fb75&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Statistic_vue_vue_type_template_id_1657fb75___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Statistic_vue_vue_type_template_id_1657fb75___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -81402,6 +85972,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Towns_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/Towns.vue */ "./resources/js/components/Towns.vue");
 /* harmony import */ var _components_Settlements_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/Settlements.vue */ "./resources/js/components/Settlements.vue");
 /* harmony import */ var _components_ElectoralUnits_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/ElectoralUnits.vue */ "./resources/js/components/ElectoralUnits.vue");
+/* harmony import */ var _components_Statistic_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/Statistic.vue */ "./resources/js/components/Statistic.vue");
+/* harmony import */ var _components_LocalList_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/LocalList.vue */ "./resources/js/components/LocalList.vue");
+
+
 
 
 
@@ -81434,6 +86008,12 @@ __webpack_require__.r(__webpack_exports__);
 }, {
   path: '/electoral_units',
   component: _components_ElectoralUnits_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
+}, {
+  path: '/statistic',
+  component: _components_Statistic_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
+}, {
+  path: '/local_list',
+  component: _components_LocalList_vue__WEBPACK_IMPORTED_MODULE_9__["default"]
 }]);
 
 /***/ }),

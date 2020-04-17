@@ -4,10 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests\ElectoralUnitsRequest;
-use App\ElectoralUnit;
+use App\LocalList;
 
-class ElectoralUnitsController extends Controller
+class LocalListsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +15,7 @@ class ElectoralUnitsController extends Controller
      */
     public function index()
     {
-        return ElectoralUnit::with('town')->with('settlement')->paginate(20)->toJson();
+        return LocalList::with('town')->paginate(10)->toJson();
     }
 
     /**
@@ -25,14 +24,12 @@ class ElectoralUnitsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ElectoralUnitsRequest $request)
+    public function store(Request $request)
     {
-        return ElectoralUnit::create([
+        return LocalList::create([
             'town_id' => $request['town_id'],
-            'settlement_id' => $request['settlement_id'],
-            'name' => $request['name'],
-            'expected_result' => $request['expected_result'],
-            'capillary' => $request['capillary']
+            'name' => $request['name']
+            // 'minority' => $request['minority']
         ]);
     }
 
@@ -54,11 +51,11 @@ class ElectoralUnitsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ElectoralUnitsRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $electoralUnit = ElectoralUnit::findOrFail($id);
+        $localList = LocalList::findOrFail($id);
 
-        $electoralUnit->update($request->all());
+        $localList->update($request->all());
     }
 
     /**
@@ -69,8 +66,8 @@ class ElectoralUnitsController extends Controller
      */
     public function destroy($id)
     {
-        $electoralUnit = ElectoralUnit::findOrFail($id);
+        $localList = LocalList::findOrFail($id);
 
-        $electoralUnit->delete();
+        $localList->delete();
     }
 }

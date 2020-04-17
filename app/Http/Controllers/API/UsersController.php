@@ -43,6 +43,7 @@ class UsersController extends Controller
             'name' => $request['name'],
             'username' => $request['username'],
             'email' => $request['email'],
+            'town_id' => $request['town_id'],
             'role_id' => $request['role_id'],
             'password' => Hash::make($request['password'])
         ]);
