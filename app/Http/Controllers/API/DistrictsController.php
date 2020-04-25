@@ -16,7 +16,7 @@ class DistrictsController extends Controller
      */
     public function index()
     {
-        return District::paginate(10)->toJson();
+        return District::paginate(10);
     }
 
     /**

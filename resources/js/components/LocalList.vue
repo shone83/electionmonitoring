@@ -4,7 +4,7 @@
         <div class="col-md-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Lokalna lista</h3>
+              <h3 class="box-title">Stranke</h3>
 
               <div class="box-tools float-right">
                 <button type="submit" class="btn btn-primary btn-sm" @click="newModal">Dodati 
@@ -17,16 +17,16 @@
               <table class="table table-hover">
                 <tbody><tr>
                   <th>ID</th>
-                  <th>Lokalna lista</th>
-                  <!-- <th>Manjina</th> -->
+                  <th>Stranka</th>
                   <th>Grad/Opština</th>
+                  <th>Manjinska</th>
                 </tr>
                 <tr v-for="local_list in local_lists.data" v-bind:key="local_list.id">
                   <td>{{ local_list.id }}</td>
                   <td>{{ local_list.name }}</td>
-                  <!-- <td v-if="local_list.minority == 1">✔</td>
-                  <td v-else></td> -->
                   <td>{{ local_list.town.name }}</td>
+                  <td v-if="local_list.minority == 1">✔</td>
+                  <td v-else></td>
                   <td>
                       <a href="#" @click="editModal(local_list)">
                           <i class="fa fa-edit"></i>
@@ -61,26 +61,24 @@
             <form @submit.prevent="editmode ? updateLocalList() : createLocalList()">
             <div class="modal-body">
                 <div class="form-group">
-                  <input v-model="form.name" type="text" name="name" placeholder="Stranka"
-                    class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
-                  <has-error :form="form" field="name"></has-error>
-                </div>
-                <div class="form-group">
                     <select name="town_id" class="form-control" v-model="form.town_id" :class="{ 'is-invalid': form.errors.has('type') }">
                         <option value="">Izaberite grad/opštinu</option>
                         <option v-for="town in towns" v-bind:key="town.id" :value="town.id">{{ town.name }}</option>
                     </select>
                     <has-error :form="form" field="town_id"></has-error>
                 </div>
-                <!-- <toggle-button v-show="editmode" name="minority" v-model="form.minority"
+                <div class="form-group">
+                  <input v-model="form.name" type="text" name="name" placeholder="Stranka"
+                    class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
+                  <has-error :form="form" field="name"></has-error>
+                </div>
+                <toggle-button v-show="editmode" name="minority" v-model="form.minority"
                  @change="toggled = $event.value"
                  :labels="{checked: 'Uključeno', unchecked: 'Isključeno'}" 
                  :width="75"/> 
                 <toggle-button v-show="!editmode" name="minority" 
-                 :value="false"
-                 @change="toggled = $event.value"
                  :labels="{checked: 'Uključeno', unchecked: 'Isključeno'}" 
-                 :width="75"/> Nacionalna manjina -->
+                 :width="75"/> Nacionalna manjina
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
@@ -98,32 +96,20 @@
     export default {
         data() {
             return {
-              // toggled: false,
+              toggled: false,
               editmode: false,
               towns: {},
               local_lists: {},
               form: new Form({
                 id: '',
                 town_id: '',
-                name: ''
-                // minority: ''
+                name: '',
+                minority: ''
               })
             }
         },
 
-        // mounted() {
-        //     var itemIndex = 0;
-        //     setInterval(() => {
-        //       this.updateItemValue(itemIndex)
-        //       itemIndex = (itemIndex + 1) % this.items.length
-        //     }, 600)
-        // },
-
         methods: {
-
-            // updateItemValue(index) {
-            //   this.items[index].value = !this.items[index].value
-            // },
 
             getResults(page = 1) {
               axios.get('api/local_list?page=' + page)
@@ -139,7 +125,7 @@
                 $('#addNew').modal('hide');
                 Toast.fire({
                       icon: 'success',
-                      title: 'Lokalna lista uspešno izmenjena!'
+                      title: 'Stranka uspešno izmenjena!'
                     })
                 this.$Progress.finish();
                 Fire.$emit('AfterIsDone');
@@ -178,7 +164,7 @@
                   this.form.delete('api/local_list/'+id).then(() => {
                       Toast.fire({
                       icon: 'success',
-                      title: 'Lokalna lista uspešno obrisana!'
+                      title: 'Stranka uspešno obrisana!'
                     })
                   Fire.$emit('AfterIsDone');
                   }).catch(() => {
@@ -188,7 +174,7 @@
               })
             },
 
-            loadLocalLists() {
+            loadLocalList() {
               axios.get('api/local_list').then(({ data }) => (this.local_lists = data));
             },
 
@@ -206,7 +192,7 @@
 
                     Toast.fire({
                       icon: 'success',
-                      title: 'Lokalna lista uspešno kreirana!'
+                      title: 'Stranka uspešno kreirana!'
                     })
 
                     this.$Progress.finish();
@@ -220,9 +206,9 @@
 
         created() {
             this.loadTowns();
-            this.loadLocalLists();
+            this.loadLocalList();
             Fire.$on('AfterIsDone', () => {
-              this.loadLocalLists();
+              this.loadLocalList();
             });
         }
     }

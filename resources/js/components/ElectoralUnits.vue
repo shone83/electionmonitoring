@@ -68,14 +68,14 @@
                 <div class="form-group">
                     <select name="settlement_id" class="form-control" v-model="form.settlement_id" :class="{ 'is-invalid': form.errors.has('type') }">
                         <option value="">Izaberite mesni odbor</option>
-                        <option v-for="settlement in settlements" v-bind:key="settlement.id" :value="settlement.id" v-if="settlement">{{ settlement.name }}</option>
+                        <option v-for="settlement in all_settlements" v-bind:key="settlement.id" :value="settlement.id">{{ settlement.name }}</option>
                     </select>
                     <has-error :form="form" field="settlement_id"></has-error>
                 </div>
                 <div class="form-group">
                     <select name="town_id" class="form-control" v-model="form.town_id" :class="{ 'is-invalid': form.errors.has('type') }">
                         <option value="">Izaberite grad/opštinu</option>
-                        <option v-for="town in towns" v-bind:key="town.id" :value="town.id" v-if="town">{{ town.name }}</option>
+                        <option v-for="town in towns" v-bind:key="town.id" :value="town.id">{{ town.name }}</option>
                     </select>
                     <has-error :form="form" field="town_id"></has-error>
                 </div>
@@ -108,7 +108,7 @@
             return {
               editmode: false,
               towns: {},
-              settlements: {},
+              all_settlements: {},
               electoral_units: {},
               form: new Form({
                 id: '',
@@ -184,7 +184,7 @@
             },
 
             loadSettlements() {
-              axios.get('api/settlement').then(response => { this.settlements = response.data.data; });
+              axios.get('api/all_settlements').then(({ data }) => (this.all_settlements = data));
             },
 
             loadElectoralUnits() {

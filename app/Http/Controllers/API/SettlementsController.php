@@ -16,7 +16,12 @@ class SettlementsController extends Controller
      */
     public function index()
     {
-        return Settlement::with('town')->paginate(10)->toJson();
+        return Settlement::with('town')->paginate(10);
+    }
+
+    public function allData()
+    {
+        return Settlement::all();
     }
 
     /**

@@ -15,8 +15,9 @@ class CreateLocalListsTable extends Migration
     {
         Schema::create('local_lists', function (Blueprint $table) {
             $table->id();
+            $table->integer('town_id')->index()->unsigned()->nullable();
             $table->string('name');
-            $table->integer('minority');
+            $table->integer('minority')->index()->unsigned()->nullable();
             $table->timestamps();
         });
     }

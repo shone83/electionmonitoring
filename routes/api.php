@@ -25,3 +25,6 @@ Route::apiResources(['town' => 'API\TownsController']);
 Route::apiResources(['settlement' => 'API\SettlementsController']);
 Route::apiResources(['electoral_unit' => 'API\ElectoralUnitsController']);
 Route::apiResources(['local_list' => 'API\LocalListsController']);
+Route::apiResources(['turnout' => 'API\TurnoutsController']);
+Route::get('all_settlements', 'API\SettlementsController@allData');
+Route::get('all_electoral_units', 'API\SettlementsController@allData');

@@ -16,7 +16,7 @@ class TownsController extends Controller
      */
     public function index()
     {
-        return Town::with('district')->paginate(20)->toJson();
+        return Town::with('district')->paginate(20);
     }
 
     /**

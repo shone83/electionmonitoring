@@ -16,7 +16,12 @@ class ElectoralUnitsController extends Controller
      */
     public function index()
     {
-        return ElectoralUnit::with('town')->with('settlement')->paginate(20)->toJson();
+        return ElectoralUnit::with('town')->with('settlement')->paginate(10);
+    }
+
+    public function allData()
+    {
+        return ElectoralUnit::all();
     }
 
     /**

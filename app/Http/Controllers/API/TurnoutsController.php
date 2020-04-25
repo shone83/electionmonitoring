@@ -4,9 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\LocalList;
+use App\Turnout;
 
-class LocalListsController extends Controller
+class TurnoutsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class LocalListsController extends Controller
      */
     public function index()
     {
-        return LocalList::with('town')->paginate(10);
+        return Turnout::with('electoral_unit')->paginate(20);
     }
 
     /**
@@ -26,11 +26,7 @@ class LocalListsController extends Controller
      */
     public function store(Request $request)
     {
-        return LocalList::create([
-            'town_id' => $request['town_id'],
-            'name' => $request['name'],
-            'minority' => $request['minority']
-        ]);
+        //
     }
 
     /**
@@ -53,9 +49,7 @@ class LocalListsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $localList = LocalList::findOrFail($id);
-
-        $localList->update($request->all());
+        //
     }
 
     /**
@@ -66,8 +60,6 @@ class LocalListsController extends Controller
      */
     public function destroy($id)
     {
-        $localList = LocalList::findOrFail($id);
-
-        $localList->delete();
+        //
     }
 }
