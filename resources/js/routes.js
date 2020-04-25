@@ -8,6 +8,8 @@ import Settlements from './components/Settlements.vue';
 import ElectoralUnits from './components/ElectoralUnits.vue';
 import Statistic from './components/Statistic.vue';
 import LocalList from './components/LocalList.vue';
+import RepublicList from './components/RepublicList.vue';
+import PresidentialList from './components/PresidentialList.vue';
 import Turnout from './components/Turnout.vue';
 
 export default [
@@ -21,5 +23,7 @@ export default [
     { path: '/electoral_units', component: ElectoralUnits},
     { path: '/statistic', component: Statistic},
     { path: '/local_list', component: LocalList},
+    { path: '/republic_list', component: RepublicList},
+    { path: '/presidential_list', component: PresidentialList},
     { path: '/turnout', component: Turnout}
 ]

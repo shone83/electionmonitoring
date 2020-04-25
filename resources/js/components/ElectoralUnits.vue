@@ -16,7 +16,6 @@
             <div class="box-body table-responsive no-padding">
               <table class="table table-hover">
                 <tbody><tr>
-                  <th>ID</th>
                   <th>Izborne jedinice</th>
                   <th>Mesni odbor</th>
                   <th>Grad/Opština</th>
@@ -24,7 +23,6 @@
                   <th>Kapilarni glasovi</th>
                 </tr>
                 <tr v-for="electoral_unit in electoral_units.data" v-bind:key="electoral_unit.id">
-                  <td>{{ electoral_unit.id }}</td>
                   <td>{{ electoral_unit.name }}</td>
                   <td>{{ electoral_unit.settlement.name }}</td>
                   <td>{{ electoral_unit.town.name }}</td>
@@ -43,6 +41,9 @@
               </tbody></table>
             </div>
             <!-- /.box-body -->
+            <div class="box-footer">
+              <pagination :data="electoral_units" @pagination-change-page="getResults" align="center"></pagination>
+            </div>
           </div>
           <!-- /.box -->
         </div>
@@ -122,6 +123,13 @@
         },
 
         methods: {
+
+            getResults(page = 1) {
+                axios.get('api/electoral_unit?page=' + page)
+                  .then(response => {
+                    this.electoral_units = response.data;
+                  });
+              },
 
             updateElectoralUnit() {
               this.$Progress.start();

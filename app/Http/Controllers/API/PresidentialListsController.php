@@ -4,9 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\LocalList;
+use App\PresidentialList;
 
-class LocalListsController extends Controller
+class PresidentialListsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class LocalListsController extends Controller
      */
     public function index()
     {
-        return LocalList::with('town')->paginate(50);
+        return PresidentialList::paginate(50);
     }
 
     /**
@@ -26,10 +26,8 @@ class LocalListsController extends Controller
      */
     public function store(Request $request)
     {
-        return LocalList::create([
-            'town_id' => $request['town_id'],
-            'name' => $request['name'],
-            'minority' => $request['minority']
+        return PresidentialList::create([
+            'name' => $request['name']
         ]);
     }
 
@@ -53,9 +51,9 @@ class LocalListsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $localList = LocalList::findOrFail($id);
+        $presidentialList = PresidentialList::findOrFail($id);
 
-        $localList->update($request->all());
+        $presidentialList->update($request->all());
     }
 
     /**
@@ -66,8 +64,8 @@ class LocalListsController extends Controller
      */
     public function destroy($id)
     {
-        $localList = LocalList::findOrFail($id);
+        $presidentialList = PresidentialList::findOrFail($id);
 
-        $localList->delete();
+        $presidentialList->delete();
     }
 }

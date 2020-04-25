@@ -2304,6 +2304,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2322,8 +2323,16 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    updateElectoralUnit: function updateElectoralUnit() {
+    getResults: function getResults() {
       var _this = this;
+
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios.get('api/electoral_unit?page=' + page).then(function (response) {
+        _this.electoral_units = response.data;
+      });
+    },
+    updateElectoralUnit: function updateElectoralUnit() {
+      var _this2 = this;
 
       this.$Progress.start();
       this.form.put('api/electoral_unit/' + this.form.id).then(function () {
@@ -2333,11 +2342,11 @@ __webpack_require__.r(__webpack_exports__);
           title: 'Izborna jedinica uspešno izmenjena!'
         });
 
-        _this.$Progress.finish();
+        _this2.$Progress.finish();
 
         Fire.$emit('AfterIsDone');
       })["catch"](function () {
-        _this.$Progress.fail();
+        _this2.$Progress.fail();
       });
     },
     editModal: function editModal(electoral_unit) {
@@ -2352,7 +2361,7 @@ __webpack_require__.r(__webpack_exports__);
       $('#addNew').modal('show');
     },
     deleteElectoralUnit: function deleteElectoralUnit(id) {
-      var _this2 = this;
+      var _this3 = this;
 
       Swal.fire({
         title: 'Da li ste sigurni?',
@@ -2366,7 +2375,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (result) {
         if (result.value) {
           // Send request to the server
-          _this2.form["delete"]('api/electoral_unit/' + id).then(function () {
+          _this3.form["delete"]('api/electoral_unit/' + id).then(function () {
             Toast.fire({
               icon: 'success',
               title: 'Izborna jedinica uspešno obrisana!'
@@ -2379,30 +2388,30 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     loadTowns: function loadTowns() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.get('api/town').then(function (response) {
-        _this3.towns = response.data.data;
+        _this4.towns = response.data.data;
       });
     },
     loadSettlements: function loadSettlements() {
-      var _this4 = this;
+      var _this5 = this;
 
       axios.get('api/all_settlements').then(function (_ref) {
         var data = _ref.data;
-        return _this4.all_settlements = data;
+        return _this5.all_settlements = data;
       });
     },
     loadElectoralUnits: function loadElectoralUnits() {
-      var _this5 = this;
+      var _this6 = this;
 
       axios.get('api/electoral_unit').then(function (_ref2) {
         var data = _ref2.data;
-        return _this5.electoral_units = data;
+        return _this6.electoral_units = data;
       });
     },
     createElectoralUnit: function createElectoralUnit() {
-      var _this6 = this;
+      var _this7 = this;
 
       this.$Progress.start();
       this.form.post('api/electoral_unit').then(function () {
@@ -2413,20 +2422,20 @@ __webpack_require__.r(__webpack_exports__);
           title: 'Izborna jedinica uspešno kreirana!'
         });
 
-        _this6.$Progress.finish();
+        _this7.$Progress.finish();
       })["catch"](function () {
-        _this6.$Progress.fail();
+        _this7.$Progress.fail();
       });
     }
   },
   created: function created() {
-    var _this7 = this;
+    var _this8 = this;
 
     this.loadTowns();
     this.loadSettlements();
     this.loadElectoralUnits();
     Fire.$on('AfterIsDone', function () {
-      _this7.loadElectoralUnits();
+      _this8.loadElectoralUnits();
     });
   }
 });
@@ -2656,6 +2665,423 @@ __webpack_require__.r(__webpack_exports__);
     this.loadLocalList();
     Fire.$on('AfterIsDone', function () {
       _this7.loadLocalList();
+    });
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PresidentialList.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PresidentialList.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      toggled: false,
+      editmode: false,
+      presidential_lists: {},
+      form: new Form({
+        id: '',
+        name: ''
+      })
+    };
+  },
+  methods: {
+    getResults: function getResults() {
+      var _this = this;
+
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios.get('api/presidential_list?page=' + page).then(function (response) {
+        _this.presidential_lists = response.data;
+      });
+    },
+    updatePresidentialList: function updatePresidentialList() {
+      var _this2 = this;
+
+      this.$Progress.start();
+      this.form.put('api/presidential_list/' + this.form.id).then(function () {
+        $('#addNew').modal('hide');
+        Toast.fire({
+          icon: 'success',
+          title: 'Kandidat uspešno izmenjen!'
+        });
+
+        _this2.$Progress.finish();
+
+        Fire.$emit('AfterIsDone');
+      })["catch"](function () {
+        _this2.$Progress.fail();
+      });
+    },
+    editModal: function editModal(presidential_list) {
+      this.editmode = true;
+      this.form.reset();
+      $('#addNew').modal('show');
+      this.form.fill(presidential_list);
+    },
+    newModal: function newModal() {
+      this.editmode = false;
+      this.form.reset();
+      $('#addNew').modal('show');
+    },
+    deletePresidentialList: function deletePresidentialList(id) {
+      var _this3 = this;
+
+      Swal.fire({
+        title: 'Da li ste sigurni?',
+        text: "Nećete moći da vratite podatke!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#808080',
+        confirmButtonText: 'Da, obrisati!',
+        cancelButtonText: 'Odustati'
+      }).then(function (result) {
+        if (result.value) {
+          // Send request to the server
+          _this3.form["delete"]('api/presidential_list/' + id).then(function () {
+            Toast.fire({
+              icon: 'success',
+              title: 'Kandidat uspešno obrisan!'
+            });
+            Fire.$emit('AfterIsDone');
+          })["catch"](function () {
+            Swal("Nije uspelo!", "Nešto nije u redu!", "warning");
+          });
+        }
+      });
+    },
+    loadPresidentialList: function loadPresidentialList() {
+      var _this4 = this;
+
+      axios.get('api/presidential_list').then(function (_ref) {
+        var data = _ref.data;
+        return _this4.presidential_lists = data;
+      });
+    },
+    createPresidentialList: function createPresidentialList() {
+      var _this5 = this;
+
+      this.$Progress.start();
+      this.form.post('api/presidential_list').then(function () {
+        Fire.$emit('AfterIsDone');
+        $('#addNew').modal('hide');
+        Toast.fire({
+          icon: 'success',
+          title: 'Kandidati uspešno kreiran!'
+        });
+
+        _this5.$Progress.finish();
+      })["catch"](function () {
+        _this5.$Progress.fail();
+      });
+    }
+  },
+  created: function created() {
+    var _this6 = this;
+
+    this.loadPresidentialList();
+    Fire.$on('AfterIsDone', function () {
+      _this6.loadPresidentialList();
+    });
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/RepublicList.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/RepublicList.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      toggled: false,
+      editmode: false,
+      republic_lists: {},
+      form: new Form({
+        id: '',
+        name: '',
+        minority: '',
+        candidates_number: ''
+      })
+    };
+  },
+  methods: {
+    getResults: function getResults() {
+      var _this = this;
+
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios.get('api/republic_list?page=' + page).then(function (response) {
+        _this.republic_lists = response.data;
+      });
+    },
+    updateRepublicList: function updateRepublicList() {
+      var _this2 = this;
+
+      this.$Progress.start();
+      this.form.put('api/republic_list/' + this.form.id).then(function () {
+        $('#addNew').modal('hide');
+        Toast.fire({
+          icon: 'success',
+          title: 'Stranka uspešno izmenjena!'
+        });
+
+        _this2.$Progress.finish();
+
+        Fire.$emit('AfterIsDone');
+      })["catch"](function () {
+        _this2.$Progress.fail();
+      });
+    },
+    editModal: function editModal(republic_list) {
+      this.editmode = true;
+      this.form.reset();
+      $('#addNew').modal('show');
+      this.form.fill(republic_list);
+    },
+    newModal: function newModal() {
+      this.editmode = false;
+      this.form.reset();
+      $('#addNew').modal('show');
+    },
+    deleteRepublicList: function deleteRepublicList(id) {
+      var _this3 = this;
+
+      Swal.fire({
+        title: 'Da li ste sigurni?',
+        text: "Nećete moći da vratite podatke!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#808080',
+        confirmButtonText: 'Da, obrisati!',
+        cancelButtonText: 'Odustati'
+      }).then(function (result) {
+        if (result.value) {
+          // Send request to the server
+          _this3.form["delete"]('api/republic_list/' + id).then(function () {
+            Toast.fire({
+              icon: 'success',
+              title: 'Stranka uspešno obrisana!'
+            });
+            Fire.$emit('AfterIsDone');
+          })["catch"](function () {
+            Swal("Nije uspelo!", "Nešto nije u redu!", "warning");
+          });
+        }
+      });
+    },
+    loadRepublicList: function loadRepublicList() {
+      var _this4 = this;
+
+      axios.get('api/republic_list').then(function (_ref) {
+        var data = _ref.data;
+        return _this4.republic_lists = data;
+      });
+    },
+    createRepublicList: function createRepublicList() {
+      var _this5 = this;
+
+      this.$Progress.start();
+      this.form.post('api/republic_list').then(function () {
+        Fire.$emit('AfterIsDone');
+        $('#addNew').modal('hide');
+        Toast.fire({
+          icon: 'success',
+          title: 'Stranka uspešno kreirana!'
+        });
+
+        _this5.$Progress.finish();
+      })["catch"](function () {
+        _this5.$Progress.fail();
+      });
+    }
+  },
+  created: function created() {
+    var _this6 = this;
+
+    this.loadRepublicList();
+    Fire.$on('AfterIsDone', function () {
+      _this6.loadRepublicList();
     });
   }
 });
@@ -3385,7 +3811,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       editmode: false,
-      electoral_units: {},
+      all_electoral_units: {},
       turnouts: {},
       form: new Form({
         id: '',
@@ -3456,8 +3882,9 @@ __webpack_require__.r(__webpack_exports__);
     loadElectoralUnits: function loadElectoralUnits() {
       var _this3 = this;
 
-      axios.get('api/electoral_unit').then(function (response) {
-        _this3.electoral_units = response.data.data;
+      axios.get('api/all_electoral_units').then(function (_ref) {
+        var data = _ref.data;
+        return _this3.all_electoral_units = data;
       });
     },
     loadTurnouts: function loadTurnouts() {
@@ -3618,6 +4045,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3637,8 +4067,16 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    updateUser: function updateUser() {
+    getResults: function getResults() {
       var _this = this;
+
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios.get('api/user?page=' + page).then(function (response) {
+        _this.users = response.data;
+      });
+    },
+    updateUser: function updateUser() {
+      var _this2 = this;
 
       this.$Progress.start();
       this.form.put('api/user/' + this.form.id).then(function () {
@@ -3648,11 +4086,11 @@ __webpack_require__.r(__webpack_exports__);
           title: 'Korisnik uspešno izmenjen!'
         });
 
-        _this.$Progress.finish();
+        _this2.$Progress.finish();
 
         Fire.$emit('AfterIsDone');
       })["catch"](function () {
-        _this.$Progress.fail();
+        _this2.$Progress.fail();
       });
     },
     editModal: function editModal(user) {
@@ -3667,7 +4105,7 @@ __webpack_require__.r(__webpack_exports__);
       $('#addNew').modal('show');
     },
     deleteUser: function deleteUser(id) {
-      var _this2 = this;
+      var _this3 = this;
 
       Swal.fire({
         title: 'Da li ste sigurni?',
@@ -3681,7 +4119,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (result) {
         if (result.value) {
           // Send request to the server
-          _this2.form["delete"]('api/user/' + id).then(function () {
+          _this3.form["delete"]('api/user/' + id).then(function () {
             Toast.fire({
               icon: 'success',
               title: 'Korisnik uspešno obrisan!'
@@ -3694,30 +4132,30 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     loadUsers: function loadUsers() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.get('api/user').then(function (_ref) {
         var data = _ref.data;
-        return _this3.users = data;
+        return _this4.users = data;
       });
     },
     loadTowns: function loadTowns() {
-      var _this4 = this;
+      var _this5 = this;
 
       axios.get('api/town').then(function (response) {
-        _this4.towns = response.data.data;
+        _this5.towns = response.data.data;
       });
     },
     loadRoles: function loadRoles() {
-      var _this5 = this;
+      var _this6 = this;
 
       axios.get('api/role').then(function (_ref2) {
         var data = _ref2.data;
-        return _this5.roles = data;
+        return _this6.roles = data;
       });
     },
     createUser: function createUser() {
-      var _this6 = this;
+      var _this7 = this;
 
       this.$Progress.start();
       this.form.post('api/user').then(function () {
@@ -3728,20 +4166,20 @@ __webpack_require__.r(__webpack_exports__);
           title: 'Korisnik uspešno kreiran!'
         });
 
-        _this6.$Progress.finish();
+        _this7.$Progress.finish();
       })["catch"](function () {
-        _this6.$Progress.fail();
+        _this7.$Progress.fail();
       });
     }
   },
   created: function created() {
-    var _this7 = this;
+    var _this8 = this;
 
     this.loadTowns();
     this.loadRoles();
     this.loadUsers();
     Fire.$on('AfterIsDone', function () {
-      _this7.loadUsers();
+      _this8.loadUsers();
     });
   }
 });
@@ -64574,8 +65012,6 @@ var render = function() {
                   _vm._v(" "),
                   _vm._l(_vm.electoral_units.data, function(electoral_unit) {
                     return _c("tr", { key: electoral_unit.id }, [
-                      _c("td", [_vm._v(_vm._s(electoral_unit.id))]),
-                      _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(electoral_unit.name))]),
                       _vm._v(" "),
                       _c("td", [
@@ -64625,7 +65061,19 @@ var render = function() {
                 2
               )
             ])
-          ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "box-footer" },
+            [
+              _c("pagination", {
+                attrs: { data: _vm.electoral_units, align: "center" },
+                on: { "pagination-change-page": _vm.getResults }
+              })
+            ],
+            1
+          )
         ])
       ])
     ]),
@@ -65018,8 +65466,6 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("th", [_vm._v("ID")]),
-      _vm._v(" "),
       _c("th", [_vm._v("Izborne jedinice")]),
       _vm._v(" "),
       _c("th", [_vm._v("Mesni odbor")]),
@@ -65491,6 +65937,731 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PresidentialList.vue?vue&type=template&id=2e0434bd&":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PresidentialList.vue?vue&type=template&id=2e0434bd& ***!
+  \*******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row mt-5" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "box" }, [
+          _c("div", { staticClass: "box-header" }, [
+            _c("h3", { staticClass: "box-title" }, [_vm._v("Kandidati")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "box-tools float-right" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary btn-sm",
+                  attrs: { type: "submit" },
+                  on: { click: _vm.newModal }
+                },
+                [
+                  _vm._v("Dodati \n                "),
+                  _c("i", { staticClass: "fa fa-plus fa-fw" })
+                ]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "box-body table-responsive no-padding" }, [
+            _c("table", { staticClass: "table table-hover" }, [
+              _c(
+                "tbody",
+                [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _vm._l(_vm.presidential_lists.data, function(
+                    presidential_list
+                  ) {
+                    return _c("tr", { key: presidential_list.id }, [
+                      _c("td", [_vm._v(_vm._s(presidential_list.id))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(presidential_list.name))]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c(
+                          "a",
+                          {
+                            attrs: { href: "#" },
+                            on: {
+                              click: function($event) {
+                                return _vm.editModal(presidential_list)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-edit" })]
+                        ),
+                        _vm._v("\n                  /\n                  "),
+                        _c(
+                          "a",
+                          {
+                            attrs: { href: "#" },
+                            on: {
+                              click: function($event) {
+                                return _vm.deletePresidentialList(
+                                  presidential_list.id
+                                )
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-trash red" })]
+                        )
+                      ])
+                    ])
+                  })
+                ],
+                2
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "box-footer" },
+            [
+              _c("pagination", {
+                attrs: { data: _vm.presidential_lists, align: "center" },
+                on: { "pagination-change-page": _vm.getResults }
+              })
+            ],
+            1
+          )
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "addNew",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "addNewLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c(
+                  "h5",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: !_vm.editmode,
+                        expression: "!editmode"
+                      }
+                    ],
+                    staticClass: "modal-title",
+                    attrs: { id: "addNewLabel" }
+                  },
+                  [_vm._v("Dodati stranku")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "h5",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.editmode,
+                        expression: "editmode"
+                      }
+                    ],
+                    staticClass: "modal-title",
+                    attrs: { id: "addNewLabel" }
+                  },
+                  [_vm._v("Izmeniti stranku")]
+                ),
+                _vm._v(" "),
+                _vm._m(1)
+              ]),
+              _vm._v(" "),
+              _c(
+                "form",
+                {
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      _vm.editmode
+                        ? _vm.updatePresidentialList()
+                        : _vm.createPresidentialList()
+                    }
+                  }
+                },
+                [
+                  _c("div", { staticClass: "modal-body" }, [
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.name,
+                              expression: "form.name"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: { "is-invalid": _vm.form.errors.has("name") },
+                          attrs: {
+                            type: "text",
+                            name: "name",
+                            placeholder: "Kandidat"
+                          },
+                          domProps: { value: _vm.form.name },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "name", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "name" }
+                        })
+                      ],
+                      1
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-footer" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-secondary",
+                        attrs: { type: "button", "data-dismiss": "modal" }
+                      },
+                      [_vm._v("Zatvori")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.editmode,
+                            expression: "editmode"
+                          }
+                        ],
+                        staticClass: "btn btn-info",
+                        attrs: { type: "submit" }
+                      },
+                      [_vm._v("Izmeniti")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: !_vm.editmode,
+                            expression: "!editmode"
+                          }
+                        ],
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "submit" }
+                      },
+                      [_vm._v("Dodati")]
+                    )
+                  ])
+                ]
+              )
+            ])
+          ]
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("th", [_vm._v("ID")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Kandidat")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/RepublicList.vue?vue&type=template&id=794407f6&":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/RepublicList.vue?vue&type=template&id=794407f6& ***!
+  \***************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row mt-5" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "box" }, [
+          _c("div", { staticClass: "box-header" }, [
+            _c("h3", { staticClass: "box-title" }, [_vm._v("Stranke")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "box-tools float-right" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary btn-sm",
+                  attrs: { type: "submit" },
+                  on: { click: _vm.newModal }
+                },
+                [
+                  _vm._v("Dodati \n                "),
+                  _c("i", { staticClass: "fa fa-plus fa-fw" })
+                ]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "box-body table-responsive no-padding" }, [
+            _c("table", { staticClass: "table table-hover" }, [
+              _c(
+                "tbody",
+                [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _vm._l(_vm.republic_lists.data, function(republic_list) {
+                    return _c("tr", { key: republic_list.id }, [
+                      _c("td", [_vm._v(_vm._s(republic_list.id))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(republic_list.name))]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(_vm._s(republic_list.candidates_number))
+                      ]),
+                      _vm._v(" "),
+                      republic_list.minority == 1
+                        ? _c("td", [_vm._v("✔")])
+                        : _c("td"),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c(
+                          "a",
+                          {
+                            attrs: { href: "#" },
+                            on: {
+                              click: function($event) {
+                                return _vm.editModal(republic_list)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-edit" })]
+                        ),
+                        _vm._v("\n                  /\n                  "),
+                        _c(
+                          "a",
+                          {
+                            attrs: { href: "#" },
+                            on: {
+                              click: function($event) {
+                                return _vm.deleteRepublicList(republic_list.id)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-trash red" })]
+                        )
+                      ])
+                    ])
+                  })
+                ],
+                2
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "box-footer" },
+            [
+              _c("pagination", {
+                attrs: { data: _vm.republic_lists, align: "center" },
+                on: { "pagination-change-page": _vm.getResults }
+              })
+            ],
+            1
+          )
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "addNew",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "addNewLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c(
+                  "h5",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: !_vm.editmode,
+                        expression: "!editmode"
+                      }
+                    ],
+                    staticClass: "modal-title",
+                    attrs: { id: "addNewLabel" }
+                  },
+                  [_vm._v("Dodati stranku")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "h5",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.editmode,
+                        expression: "editmode"
+                      }
+                    ],
+                    staticClass: "modal-title",
+                    attrs: { id: "addNewLabel" }
+                  },
+                  [_vm._v("Izmeniti stranku")]
+                ),
+                _vm._v(" "),
+                _vm._m(1)
+              ]),
+              _vm._v(" "),
+              _c(
+                "form",
+                {
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      _vm.editmode
+                        ? _vm.updateRepublicList()
+                        : _vm.createRepublicList()
+                    }
+                  }
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "modal-body" },
+                    [
+                      _c(
+                        "div",
+                        { staticClass: "form-group" },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.name,
+                                expression: "form.name"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            class: {
+                              "is-invalid": _vm.form.errors.has("name")
+                            },
+                            attrs: {
+                              type: "text",
+                              name: "name",
+                              placeholder: "Stranka"
+                            },
+                            domProps: { value: _vm.form.name },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(_vm.form, "name", $event.target.value)
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("has-error", {
+                            attrs: { form: _vm.form, field: "name" }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "form-group" },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.candidates_number,
+                                expression: "form.candidates_number"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            class: {
+                              "is-invalid": _vm.form.errors.has(
+                                "candidates_number"
+                              )
+                            },
+                            attrs: {
+                              type: "text",
+                              name: "candidates_number",
+                              placeholder: "Broj kandidata"
+                            },
+                            domProps: { value: _vm.form.candidates_number },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.form,
+                                  "candidates_number",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("has-error", {
+                            attrs: {
+                              form: _vm.form,
+                              field: "candidates_number"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("toggle-button", {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.editmode,
+                            expression: "editmode"
+                          }
+                        ],
+                        attrs: {
+                          name: "minority",
+                          labels: {
+                            checked: "Uključeno",
+                            unchecked: "Isključeno"
+                          },
+                          width: 75
+                        },
+                        on: {
+                          change: function($event) {
+                            _vm.toggled = $event.value
+                          }
+                        },
+                        model: {
+                          value: _vm.form.minority,
+                          callback: function($$v) {
+                            _vm.$set(_vm.form, "minority", $$v)
+                          },
+                          expression: "form.minority"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("toggle-button", {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: !_vm.editmode,
+                            expression: "!editmode"
+                          }
+                        ],
+                        attrs: {
+                          name: "minority",
+                          labels: {
+                            checked: "Uključeno",
+                            unchecked: "Isključeno"
+                          },
+                          width: 75
+                        }
+                      }),
+                      _vm._v(" Nacionalna manjina\n        ")
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-footer" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-secondary",
+                        attrs: { type: "button", "data-dismiss": "modal" }
+                      },
+                      [_vm._v("Zatvori")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.editmode,
+                            expression: "editmode"
+                          }
+                        ],
+                        staticClass: "btn btn-info",
+                        attrs: { type: "submit" }
+                      },
+                      [_vm._v("Izmeniti")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: !_vm.editmode,
+                            expression: "!editmode"
+                          }
+                        ],
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "submit" }
+                      },
+                      [_vm._v("Dodati")]
+                    )
+                  ])
+                ]
+              )
+            ])
+          ]
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("th", [_vm._v("ID")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Stranka")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Broj kandidata")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Manjinska")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Roles.vue?vue&type=template&id=312d3e3c&":
 /*!********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Roles.vue?vue&type=template&id=312d3e3c& ***!
@@ -65758,16 +66929,11 @@ var render = function() {
                             ]),
                             _vm._v(" "),
                             _vm._l(_vm.towns, function(town) {
-                              return town
-                                ? _c(
-                                    "option",
-                                    {
-                                      key: town.id,
-                                      domProps: { value: town.id }
-                                    },
-                                    [_vm._v(_vm._s(town.name))]
-                                  )
-                                : _vm._e()
+                              return _c(
+                                "option",
+                                { key: town.id, domProps: { value: town.id } },
+                                [_vm._v(_vm._s(town.name))]
+                              )
                             })
                           ],
                           2
@@ -68664,7 +69830,7 @@ var render = function() {
                 staticClass: "form-control",
                 attrs: { multiple: "", size: "50" }
               },
-              _vm._l(_vm.electoral_units, function(electoral_unit) {
+              _vm._l(_vm.all_electoral_units, function(electoral_unit) {
                 return _c(
                   "option",
                   {
@@ -68922,7 +70088,19 @@ var render = function() {
                 2
               )
             ])
-          ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "box-footer" },
+            [
+              _c("pagination", {
+                attrs: { data: _vm.users, align: "center" },
+                on: { "pagination-change-page": _vm.getResults }
+              })
+            ],
+            1
+          )
         ])
       ])
     ]),
@@ -86053,6 +87231,144 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/PresidentialList.vue":
+/*!******************************************************!*\
+  !*** ./resources/js/components/PresidentialList.vue ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _PresidentialList_vue_vue_type_template_id_2e0434bd___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PresidentialList.vue?vue&type=template&id=2e0434bd& */ "./resources/js/components/PresidentialList.vue?vue&type=template&id=2e0434bd&");
+/* harmony import */ var _PresidentialList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PresidentialList.vue?vue&type=script&lang=js& */ "./resources/js/components/PresidentialList.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _PresidentialList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _PresidentialList_vue_vue_type_template_id_2e0434bd___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _PresidentialList_vue_vue_type_template_id_2e0434bd___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/PresidentialList.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/PresidentialList.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/PresidentialList.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PresidentialList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./PresidentialList.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PresidentialList.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PresidentialList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/PresidentialList.vue?vue&type=template&id=2e0434bd&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/PresidentialList.vue?vue&type=template&id=2e0434bd& ***!
+  \*************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PresidentialList_vue_vue_type_template_id_2e0434bd___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./PresidentialList.vue?vue&type=template&id=2e0434bd& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PresidentialList.vue?vue&type=template&id=2e0434bd&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PresidentialList_vue_vue_type_template_id_2e0434bd___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PresidentialList_vue_vue_type_template_id_2e0434bd___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/RepublicList.vue":
+/*!**************************************************!*\
+  !*** ./resources/js/components/RepublicList.vue ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _RepublicList_vue_vue_type_template_id_794407f6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RepublicList.vue?vue&type=template&id=794407f6& */ "./resources/js/components/RepublicList.vue?vue&type=template&id=794407f6&");
+/* harmony import */ var _RepublicList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RepublicList.vue?vue&type=script&lang=js& */ "./resources/js/components/RepublicList.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _RepublicList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _RepublicList_vue_vue_type_template_id_794407f6___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _RepublicList_vue_vue_type_template_id_794407f6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/RepublicList.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/RepublicList.vue?vue&type=script&lang=js&":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/RepublicList.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RepublicList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./RepublicList.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/RepublicList.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RepublicList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/RepublicList.vue?vue&type=template&id=794407f6&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/RepublicList.vue?vue&type=template&id=794407f6& ***!
+  \*********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RepublicList_vue_vue_type_template_id_794407f6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./RepublicList.vue?vue&type=template&id=794407f6& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/RepublicList.vue?vue&type=template&id=794407f6&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RepublicList_vue_vue_type_template_id_794407f6___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RepublicList_vue_vue_type_template_id_794407f6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/Roles.vue":
 /*!*******************************************!*\
   !*** ./resources/js/components/Roles.vue ***!
@@ -86816,7 +88132,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_ElectoralUnits_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/ElectoralUnits.vue */ "./resources/js/components/ElectoralUnits.vue");
 /* harmony import */ var _components_Statistic_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/Statistic.vue */ "./resources/js/components/Statistic.vue");
 /* harmony import */ var _components_LocalList_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/LocalList.vue */ "./resources/js/components/LocalList.vue");
-/* harmony import */ var _components_Turnout_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/Turnout.vue */ "./resources/js/components/Turnout.vue");
+/* harmony import */ var _components_RepublicList_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/RepublicList.vue */ "./resources/js/components/RepublicList.vue");
+/* harmony import */ var _components_PresidentialList_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/PresidentialList.vue */ "./resources/js/components/PresidentialList.vue");
+/* harmony import */ var _components_Turnout_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/Turnout.vue */ "./resources/js/components/Turnout.vue");
+
+
 
 
 
@@ -86859,8 +88179,14 @@ __webpack_require__.r(__webpack_exports__);
   path: '/local_list',
   component: _components_LocalList_vue__WEBPACK_IMPORTED_MODULE_9__["default"]
 }, {
+  path: '/republic_list',
+  component: _components_RepublicList_vue__WEBPACK_IMPORTED_MODULE_10__["default"]
+}, {
+  path: '/presidential_list',
+  component: _components_PresidentialList_vue__WEBPACK_IMPORTED_MODULE_11__["default"]
+}, {
   path: '/turnout',
-  component: _components_Turnout_vue__WEBPACK_IMPORTED_MODULE_10__["default"]
+  component: _components_Turnout_vue__WEBPACK_IMPORTED_MODULE_12__["default"]
 }]);
 
 /***/ }),

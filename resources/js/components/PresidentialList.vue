@@ -4,7 +4,7 @@
         <div class="col-md-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Mesni odbori</h3>
+              <h3 class="box-title">Kandidati</h3>
 
               <div class="box-tools float-right">
                 <button type="submit" class="btn btn-primary btn-sm" @click="newModal">Dodati 
@@ -17,19 +17,17 @@
               <table class="table table-hover">
                 <tbody><tr>
                   <th>ID</th>
-                  <th>Mesni odbor</th>
-                  <th>Grad/Opština</th>
+                  <th>Kandidat</th>
                 </tr>
-                <tr v-for="settlement in settlements.data" v-bind:key="settlement.id">
-                  <td>{{ settlement.id }}</td>
-                  <td>{{ settlement.name }}</td>
-                  <td>{{ settlement.town.name }}</td>
+                <tr v-for="presidential_list in presidential_lists.data" v-bind:key="presidential_list.id">
+                  <td>{{ presidential_list.id }}</td>
+                  <td>{{ presidential_list.name }}</td>
                   <td>
-                      <a href="#" @click="editModal(settlement)">
+                      <a href="#" @click="editModal(presidential_list)">
                           <i class="fa fa-edit"></i>
                       </a>
                       /
-                      <a href="#" @click="deleteSettlement(settlement.id)">
+                      <a href="#" @click="deletePresidentialList(presidential_list.id)">
                           <i class="fa fa-trash red"></i>
                       </a>
                   </td>
@@ -38,7 +36,7 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
-              <pagination :data="settlements" @pagination-change-page="getResults" align="center"></pagination>
+              <pagination :data="presidential_lists" @pagination-change-page="getResults" align="center"></pagination>
             </div>
           </div>
           <!-- /.box -->
@@ -49,23 +47,16 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" v-show="!editmode" id="addNewLabel">Dodati mesni odbor</h5>
-              <h5 class="modal-title" v-show="editmode" id="addNewLabel">Izmeniti mesni odbor</h5>
+              <h5 class="modal-title" v-show="!editmode" id="addNewLabel">Dodati stranku</h5>
+              <h5 class="modal-title" v-show="editmode" id="addNewLabel">Izmeniti stranku</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <form @submit.prevent="editmode ? updateSettlement() : createSettlement()">
+            <form @submit.prevent="editmode ? updatePresidentialList() : createPresidentialList()">
             <div class="modal-body">
                 <div class="form-group">
-                    <select name="town_id" class="form-control" v-model="form.town_id" :class="{ 'is-invalid': form.errors.has('type') }">
-                        <option value="">Izaberite grad/opštinu</option>
-                        <option v-for="town in towns" v-bind:key="town.id" :value="town.id">{{ town.name }}</option>
-                    </select>
-                    <has-error :form="form" field="town_id"></has-error>
-                </div>
-                <div class="form-group">
-                  <input v-model="form.name" type="text" name="name" placeholder="Mesni odbor"
+                  <input v-model="form.name" type="text" name="name" placeholder="Kandidat"
                     class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
                   <has-error :form="form" field="name"></has-error>
                 </div>
@@ -86,12 +77,11 @@
     export default {
         data() {
             return {
+              toggled: false,
               editmode: false,
-              towns: {},
-              settlements: {},
+              presidential_lists: {},
               form: new Form({
                 id: '',
-                town_id: '',
                 name: ''
               })
             }
@@ -100,20 +90,20 @@
         methods: {
 
             getResults(page = 1) {
-              axios.get('api/settlement?page=' + page)
+              axios.get('api/presidential_list?page=' + page)
                 .then(response => {
-                  this.settlements = response.data;
+                  this.presidential_lists = response.data;
                 });
             },
 
-            updateSettlement() {
+            updatePresidentialList() {
               this.$Progress.start();
-              this.form.put('api/settlement/'+this.form.id)
+              this.form.put('api/presidential_list/'+this.form.id)
               .then(() => {
                 $('#addNew').modal('hide');
                 Toast.fire({
                       icon: 'success',
-                      title: 'Mesni odbor uspešno izmenjen!'
+                      title: 'Kandidat uspešno izmenjen!'
                     })
                 this.$Progress.finish();
                 Fire.$emit('AfterIsDone');
@@ -123,11 +113,11 @@
               });
             },
 
-            editModal(settlement) {
+            editModal(presidential_list) {
               this.editmode = true;
               this.form.reset();
               $('#addNew').modal('show');
-              this.form.fill(settlement);
+              this.form.fill(presidential_list);
             },
 
             newModal() {
@@ -136,7 +126,7 @@
               $('#addNew').modal('show');
             },
 
-            deleteSettlement(id) {
+            deletePresidentialList(id) {
               Swal.fire({
                 title: 'Da li ste sigurni?',
                 text: "Nećete moći da vratite podatke!",
@@ -149,10 +139,10 @@
               }).then((result) => {
                 if (result.value) {
                   // Send request to the server
-                  this.form.delete('api/settlement/'+id).then(() => {
+                  this.form.delete('api/presidential_list/'+id).then(() => {
                       Toast.fire({
                       icon: 'success',
-                      title: 'Mesni odbor uspešno obrisan!'
+                      title: 'Kandidat uspešno obrisan!'
                     })
                   Fire.$emit('AfterIsDone');
                   }).catch(() => {
@@ -162,25 +152,21 @@
               })
             },
 
-            loadSettlements() {
-              axios.get('api/settlement').then(({ data }) => (this.settlements = data));
+            loadPresidentialList() {
+              axios.get('api/presidential_list').then(({ data }) => (this.presidential_lists = data));
             },
 
-            loadTowns() {
-              axios.get('api/town').then(response => { this.towns = response.data.data; });
-            },
-
-            createSettlement() {
+            createPresidentialList() {
               this.$Progress.start();
 
-              this.form.post('api/settlement')
+              this.form.post('api/presidential_list')
               .then(() => {
                     Fire.$emit('AfterIsDone');
                     $('#addNew').modal('hide')
 
                     Toast.fire({
                       icon: 'success',
-                      title: 'Mesni odbor uspešno kreiran!'
+                      title: 'Kandidati uspešno kreiran!'
                     })
 
                     this.$Progress.finish();
@@ -193,10 +179,9 @@
         },
 
         created() {
-            this.loadTowns();
-            this.loadSettlements();
+            this.loadPresidentialList();
             Fire.$on('AfterIsDone', () => {
-              this.loadSettlements();
+              this.loadPresidentialList();
             });
         }
     }

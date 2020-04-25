@@ -4,7 +4,7 @@
         <div class="col">
             <div class="form-group">
               <select multiple class="form-control" size="50">
-                <option v-for="electoral_unit in electoral_units" 
+                <option v-for="electoral_unit in all_electoral_units" 
                   v-bind:key="electoral_unit.id" 
                   :value="electoral_unit.id">
                     {{ electoral_unit.name }}
@@ -93,7 +93,7 @@
         data() {
             return {
               editmode: false,
-              electoral_units: {},
+              all_electoral_units: {},
               turnouts: {},
               form: new Form({
                 id: '',
@@ -164,7 +164,7 @@
             },
 
             loadElectoralUnits() {
-              axios.get('api/electoral_unit').then(response => { this.electoral_units = response.data.data; });
+              axios.get('api/all_electoral_units').then(({ data }) => (this.all_electoral_units = data));
             },
 
             loadTurnouts() {

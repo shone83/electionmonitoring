@@ -73,13 +73,13 @@
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link to="#" class="nav-link">
+              <router-link to="/republic_list" class="nav-link">
                 <i class="fas fa-flag nav-icon"></i>
                 <p>Republička lista</p>
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link to="#" class="nav-link">
+              <router-link to="/presidential_list" class="nav-link">
                 <i class="fas fa-user-tie nav-icon"></i>
                 <p>Predsednička lista</p>
               </router-link>

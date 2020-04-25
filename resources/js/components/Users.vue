@@ -45,6 +45,9 @@
               </tbody></table>
             </div>
             <!-- /.box-body -->
+            <div class="box-footer">
+              <pagination :data="users" @pagination-change-page="getResults" align="center"></pagination>
+            </div>
           </div>
           <!-- /.box -->
         </div>
@@ -130,6 +133,13 @@
         },
 
         methods: {
+
+            getResults(page = 1) {
+                axios.get('api/user?page=' + page)
+                  .then(response => {
+                    this.users = response.data;
+                  });
+              },
 
             updateUser() {
               this.$Progress.start();

@@ -4,9 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\LocalList;
+use App\RepublicList;
 
-class LocalListsController extends Controller
+class RepublicListsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class LocalListsController extends Controller
      */
     public function index()
     {
-        return LocalList::with('town')->paginate(50);
+        return RepublicList::paginate(50);
     }
 
     /**
@@ -26,10 +26,10 @@ class LocalListsController extends Controller
      */
     public function store(Request $request)
     {
-        return LocalList::create([
-            'town_id' => $request['town_id'],
+        return RepublicList::create([
             'name' => $request['name'],
-            'minority' => $request['minority']
+            'minority' => $request['minority'],
+            'candidates_number' => $request['candidates_number']
         ]);
     }
 
@@ -53,9 +53,9 @@ class LocalListsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $localList = LocalList::findOrFail($id);
+        $republicList = RepublicList::findOrFail($id);
 
-        $localList->update($request->all());
+        $republicList->update($request->all());
     }
 
     /**
@@ -66,8 +66,8 @@ class LocalListsController extends Controller
      */
     public function destroy($id)
     {
-        $localList = LocalList::findOrFail($id);
+        $republicList = RepublicList::findOrFail($id);
 
-        $localList->delete();
+        $republicList->delete();
     }
 }
