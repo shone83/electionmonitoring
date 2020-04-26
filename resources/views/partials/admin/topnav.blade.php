@@ -8,13 +8,13 @@
         <a href="/turnout" class="nav-link">Izlaznost</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Lokalni rezultati</a>
+        <a href="/local_result" class="nav-link">Lokalni rezultati</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Republički rezultati</a>
+        <a href="/republic_result" class="nav-link">Republički rezultati</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Predsednički rezultati</a>
+        <a href="/presidential_result" class="nav-link">Predsednički rezultati</a>
       </li>
     </ul>
 

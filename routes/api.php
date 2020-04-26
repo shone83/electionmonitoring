@@ -30,3 +30,6 @@ Route::apiResources(['presidential_list' => 'API\PresidentialListsController']);
 Route::apiResources(['turnout' => 'API\TurnoutsController']);
 Route::get('all_settlements', 'API\SettlementsController@allData');
 Route::get('all_electoral_units', 'API\ElectoralUnitsController@allData');
+Route::get('all_local_lists', 'API\LocalListsController@allData');
+Route::get('all_republic_lists', 'API\RepublicListsController@allData');
+Route::get('all_presidential_lists', 'API\PresidentialListsController@allData');

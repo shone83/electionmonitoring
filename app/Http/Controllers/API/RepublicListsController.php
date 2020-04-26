@@ -18,6 +18,11 @@ class RepublicListsController extends Controller
         return RepublicList::paginate(50);
     }
 
+    public function allData()
+    {
+        return RepublicList::all();
+    }
+
     /**
      * Store a newly created resource in storage.
      *

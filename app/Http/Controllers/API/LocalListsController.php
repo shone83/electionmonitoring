@@ -18,6 +18,11 @@ class LocalListsController extends Controller
         return LocalList::with('town')->paginate(50);
     }
 
+    public function allData()
+    {
+        return LocalList::all();
+    }
+
     /**
      * Store a newly created resource in storage.
      *

@@ -18,6 +18,11 @@ class PresidentialListsController extends Controller
         return PresidentialList::paginate(50);
     }
 
+    public function allData()
+    {
+        return PresidentialList::all();
+    }
+
     /**
      * Store a newly created resource in storage.
      *
